@@ -1,0 +1,35 @@
+[2.170s] Invoking command in '/home/g5/dd2419_ws/build/robp_boot_camp_launch': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib PYTHONPATH=/home/g5/dd2419_ws/build/robp_boot_camp_launch/prefix_override:/home/g5/dd2419_ws/install/robp_boot_camp_launch/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/robp_boot_camp_launch/build --no-deps install_data
+[2.799s] running develop
+[2.799s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[2.799s]   warnings.warn(
+[2.803s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[2.803s]   warnings.warn(
+[3.287s] running egg_info
+[3.287s] creating robp_boot_camp_launch.egg-info
+[3.288s] writing robp_boot_camp_launch.egg-info/PKG-INFO
+[3.289s] writing dependency_links to robp_boot_camp_launch.egg-info/dependency_links.txt
+[3.290s] writing entry points to robp_boot_camp_launch.egg-info/entry_points.txt
+[3.291s] writing requirements to robp_boot_camp_launch.egg-info/requires.txt
+[3.292s] writing top-level names to robp_boot_camp_launch.egg-info/top_level.txt
+[3.292s] writing manifest file 'robp_boot_camp_launch.egg-info/SOURCES.txt'
+[3.296s] reading manifest file 'robp_boot_camp_launch.egg-info/SOURCES.txt'
+[3.298s] writing manifest file 'robp_boot_camp_launch.egg-info/SOURCES.txt'
+[3.302s] running build_ext
+[3.302s] Creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/lib/python3.10/site-packages/robp-boot-camp-launch.egg-link (link to .)
+[3.304s] 
+[3.304s] Installed /home/g5/dd2419_ws/build/robp_boot_camp_launch
+[3.305s] running install_data
+[3.305s] creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/ament_index
+[3.305s] creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/ament_index/resource_index
+[3.305s] creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/ament_index/resource_index/packages
+[3.306s] copying resource/robp_boot_camp_launch -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/ament_index/resource_index/packages
+[3.306s] creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.306s] copying launch/boot_camp_part1_launch.xml -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.308s] copying launch/boot_camp_part2_launch.xml -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.310s] copying launch/boot_camp_part3_launch.xml -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/launch
+[3.313s] creating /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.313s] copying rviz/boot_camp_part1.rviz -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.313s] copying rviz/boot_camp_part3.rviz -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.314s] copying rviz/boot_camp_part2.rviz -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch/rviz
+[3.314s] copying package.xml -> /home/g5/dd2419_ws/install/robp_boot_camp_launch/share/robp_boot_camp_launch
+[3.427s] Invoked command in '/home/g5/dd2419_ws/build/robp_boot_camp_launch' returned '0': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib PYTHONPATH=/home/g5/dd2419_ws/build/robp_boot_camp_launch/prefix_override:/home/g5/dd2419_ws/install/robp_boot_camp_launch/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/robp_boot_camp_launch/build --no-deps install_data

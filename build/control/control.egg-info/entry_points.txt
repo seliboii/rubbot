@@ -1,0 +1,5 @@
+[console_scripts]
+arm_controller = control.arm_controller:main
+remote_controller = control.remote_controller:main
+wheel_controller = control.wheel_controller:main
+

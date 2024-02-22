@@ -1,0 +1,22 @@
+running develop
+running egg_info
+creating detection.egg-info
+writing detection.egg-info/PKG-INFO
+writing dependency_links to detection.egg-info/dependency_links.txt
+writing entry points to detection.egg-info/entry_points.txt
+writing requirements to detection.egg-info/requires.txt
+writing top-level names to detection.egg-info/top_level.txt
+writing manifest file 'detection.egg-info/SOURCES.txt'
+reading manifest file 'detection.egg-info/SOURCES.txt'
+writing manifest file 'detection.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/g5/dd2419_ws/install/detection/lib/python3.10/site-packages/detection.egg-link (link to .)
+Installing detection script to /home/g5/dd2419_ws/install/detection/lib/detection
+
+Installed /home/g5/dd2419_ws/build/detection
+running install_data
+creating /home/g5/dd2419_ws/install/detection/share/ament_index
+creating /home/g5/dd2419_ws/install/detection/share/ament_index/resource_index
+creating /home/g5/dd2419_ws/install/detection/share/ament_index/resource_index/packages
+copying resource/detection -> /home/g5/dd2419_ws/install/detection/share/ament_index/resource_index/packages
+copying package.xml -> /home/g5/dd2419_ws/install/detection/share/detection

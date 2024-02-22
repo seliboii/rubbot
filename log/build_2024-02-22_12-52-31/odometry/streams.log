@@ -1,0 +1,28 @@
+[1.862s] Invoking command in '/home/g5/dd2419_ws/build/odometry': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib PYTHONPATH=/home/g5/dd2419_ws/build/odometry/prefix_override:/home/g5/dd2419_ws/install/odometry/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/odometry/build --no-deps install_data
+[2.353s] running develop
+[2.354s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[2.354s]   warnings.warn(
+[2.358s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[2.358s]   warnings.warn(
+[2.741s] running egg_info
+[2.741s] creating odometry.egg-info
+[2.741s] writing odometry.egg-info/PKG-INFO
+[2.741s] writing dependency_links to odometry.egg-info/dependency_links.txt
+[2.742s] writing entry points to odometry.egg-info/entry_points.txt
+[2.742s] writing requirements to odometry.egg-info/requires.txt
+[2.742s] writing top-level names to odometry.egg-info/top_level.txt
+[2.742s] writing manifest file 'odometry.egg-info/SOURCES.txt'
+[2.745s] reading manifest file 'odometry.egg-info/SOURCES.txt'
+[2.747s] writing manifest file 'odometry.egg-info/SOURCES.txt'
+[2.750s] running build_ext
+[2.751s] Creating /home/g5/dd2419_ws/install/odometry/lib/python3.10/site-packages/odometry.egg-link (link to .)
+[2.752s] Installing odometry script to /home/g5/dd2419_ws/install/odometry/lib/odometry
+[2.753s] 
+[2.758s] Installed /home/g5/dd2419_ws/build/odometry
+[2.758s] running install_data
+[2.758s] creating /home/g5/dd2419_ws/install/odometry/share/ament_index
+[2.759s] creating /home/g5/dd2419_ws/install/odometry/share/ament_index/resource_index
+[2.760s] creating /home/g5/dd2419_ws/install/odometry/share/ament_index/resource_index/packages
+[2.760s] copying resource/odometry -> /home/g5/dd2419_ws/install/odometry/share/ament_index/resource_index/packages
+[2.760s] copying package.xml -> /home/g5/dd2419_ws/install/odometry/share/odometry
+[2.894s] Invoked command in '/home/g5/dd2419_ws/build/odometry' returned '0': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib PYTHONPATH=/home/g5/dd2419_ws/build/odometry/prefix_override:/home/g5/dd2419_ws/install/odometry/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/odometry/build --no-deps install_data

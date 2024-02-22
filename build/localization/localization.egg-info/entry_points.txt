@@ -1,0 +1,3 @@
+[console_scripts]
+update = localization.update:main
+

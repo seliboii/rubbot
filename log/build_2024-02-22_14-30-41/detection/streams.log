@@ -1,0 +1,21 @@
+[3.480s] Invoking command in '/home/g5/dd2419_ws/build/detection': PYTHONPATH=/home/g5/dd2419_ws/build/detection/prefix_override:/home/g5/dd2419_ws/install/detection/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/detection/build --no-deps install_data
+[3.892s] running develop
+[3.892s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[3.893s]   warnings.warn(
+[3.898s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[3.898s]   warnings.warn(
+[4.331s] running egg_info
+[4.332s] writing detection.egg-info/PKG-INFO
+[4.333s] writing dependency_links to detection.egg-info/dependency_links.txt
+[4.334s] writing entry points to detection.egg-info/entry_points.txt
+[4.335s] writing requirements to detection.egg-info/requires.txt
+[4.336s] writing top-level names to detection.egg-info/top_level.txt
+[4.338s] reading manifest file 'detection.egg-info/SOURCES.txt'
+[4.338s] writing manifest file 'detection.egg-info/SOURCES.txt'
+[4.341s] running build_ext
+[4.341s] Creating /home/g5/dd2419_ws/install/detection/lib/python3.10/site-packages/detection.egg-link (link to .)
+[4.343s] Installing detection script to /home/g5/dd2419_ws/install/detection/lib/detection
+[4.343s] 
+[4.344s] Installed /home/g5/dd2419_ws/build/detection
+[4.344s] running install_data
+[4.908s] Invoked command in '/home/g5/dd2419_ws/build/detection' returned '0': PYTHONPATH=/home/g5/dd2419_ws/build/detection/prefix_override:/home/g5/dd2419_ws/install/detection/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/detection/build --no-deps install_data

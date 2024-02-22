@@ -1,0 +1,3 @@
+[console_scripts]
+display_markers = display_markers.display_markers:main
+

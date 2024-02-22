@@ -1,0 +1,13 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/robp_boot_camp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_boot_camp_interfaces/msg/detail/ad_converter__type_support.cpp.o"
+  "CMakeFiles/robp_boot_camp_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/robp_boot_camp_interfaces/msg/detail/ad_converter__type_support.cpp.o.d"
+  "librobp_boot_camp_interfaces__rosidl_typesupport_introspection_cpp.pdb"
+  "librobp_boot_camp_interfaces__rosidl_typesupport_introspection_cpp.so"
+  "rosidl_typesupport_introspection_cpp/robp_boot_camp_interfaces/msg/detail/ad_converter__rosidl_typesupport_introspection_cpp.hpp"
+  "rosidl_typesupport_introspection_cpp/robp_boot_camp_interfaces/msg/detail/ad_converter__type_support.cpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/robp_boot_camp_interfaces__rosidl_typesupport_introspection_cpp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

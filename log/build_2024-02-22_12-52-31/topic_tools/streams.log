@@ -1,0 +1,189 @@
+[0.832s] Invoking command in '/home/g5/dd2419_ws/build/topic_tools': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake /home/g5/dd2419_ws/src/topic_tools/topic_tools -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/g5/dd2419_ws/install/topic_tools
+[0.916s] -- The C compiler identification is GNU 11.4.0
+[1.048s] -- The CXX compiler identification is GNU 11.4.0
+[1.063s] -- Detecting C compiler ABI info
+[1.240s] -- Detecting C compiler ABI info - done
+[1.259s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.260s] -- Detecting C compile features
+[1.260s] -- Detecting C compile features - done
+[1.271s] -- Detecting CXX compiler ABI info
+[1.509s] -- Detecting CXX compiler ABI info - done
+[1.547s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.547s] -- Detecting CXX compile features
+[1.547s] -- Detecting CXX compile features - done
+[1.556s] -- Found ament_cmake_auto: 1.3.7 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[1.972s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+[2.108s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.411s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[2.423s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[2.443s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[2.472s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.510s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.685s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[2.695s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[2.941s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[3.010s] -- Found FastRTPS: /opt/ros/humble/include  
+[3.079s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.102s] -- Looking for pthread.h
+[3.243s] -- Looking for pthread.h - found
+[3.243s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[3.347s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[3.348s] -- Found Threads: TRUE  
+[3.798s] -- Found ament_lint_auto: 0.12.10 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[3.878s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[3.909s] -- Added test 'copyright' to check source files copyright and LICENSE
+[3.913s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[3.915s] -- Configured cppcheck include dirs: /home/g5/dd2419_ws/src/topic_tools/topic_tools/include;$<BUILD_INTERFACE:/home/g5/dd2419_ws/src/topic_tools/topic_tools/include>
+[3.915s] -- Configured cppcheck exclude dirs and/or files: 
+[3.919s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[3.919s] -- Configured cpplint exclude dirs and/or files: 
+[3.923s] -- Added test 'flake8' to check Python code syntax and style conventions
+[3.925s] -- Added test 'lint_cmake' to check CMake code style
+[3.927s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[3.930s] -- Added test 'uncrustify' to check C / C++ code style
+[3.930s] -- Configured uncrustify additional arguments: 
+[3.931s] -- Added test 'xmllint' to check XML markup files
+[3.938s] -- Configuring done
+[4.064s] -- Generating done
+[4.070s] -- Build files have been written to: /home/g5/dd2419_ws/build/topic_tools
+[4.092s] Invoked command in '/home/g5/dd2419_ws/build/topic_tools' returned '0': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake /home/g5/dd2419_ws/src/topic_tools/topic_tools -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/g5/dd2419_ws/install/topic_tools
+[4.094s] Invoking command in '/home/g5/dd2419_ws/build/topic_tools': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake --build /home/g5/dd2419_ws/build/topic_tools -- -j8 -l8
+[4.203s] [  2%] [32mBuilding CXX object CMakeFiles/relay_node.dir/src/relay_node.cpp.o[0m
+[4.212s] [  5%] [32mBuilding CXX object CMakeFiles/relay_node.dir/src/tool_base_node.cpp.o[0m
+[4.213s] [  5%] Built target ament_cmake_python_symlink_topic_tools
+[4.225s] [  5%] Built target ament_cmake_python_symlink_topic_tools_setup
+[4.247s] [  8%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[4.288s] [ 10%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[4.822s] running egg_info
+[4.823s] creating topic_tools.egg-info
+[4.824s] writing topic_tools.egg-info/PKG-INFO
+[4.824s] writing dependency_links to topic_tools.egg-info/dependency_links.txt
+[4.824s] writing entry points to topic_tools.egg-info/entry_points.txt
+[4.824s] writing top-level names to topic_tools.egg-info/top_level.txt
+[4.825s] writing manifest file 'topic_tools.egg-info/SOURCES.txt'
+[4.829s] reading manifest file 'topic_tools.egg-info/SOURCES.txt'
+[4.830s] writing manifest file 'topic_tools.egg-info/SOURCES.txt'
+[4.884s] [ 10%] Built target ament_cmake_python_build_topic_tools_egg
+[5.572s] running install_scripts
+[5.577s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[5.577s]   warnings.warn(
+[5.621s] running egg_info
+[5.623s] writing topic_tools.egg-info/PKG-INFO
+[5.624s] writing dependency_links to topic_tools.egg-info/dependency_links.txt
+[5.625s] writing entry points to topic_tools.egg-info/entry_points.txt
+[5.625s] writing top-level names to topic_tools.egg-info/top_level.txt
+[5.645s] reading manifest file 'topic_tools.egg-info/SOURCES.txt'
+[5.647s] writing manifest file 'topic_tools.egg-info/SOURCES.txt'
+[5.650s] Installing relay_field script to scripts
+[5.651s] Installing transform script to scripts
+[5.743s] [ 10%] Built target ament_cmake_python_build_topic_tools_scripts
+[6.208s] [ 13%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[6.338s] [ 13%] Built target gtest_main
+[11.032s] [ 16%] [32m[1mLinking CXX static library libgtest.a[0m
+[11.192s] [ 16%] Built target gtest
+[12.713s] [ 18%] [32m[1mLinking CXX shared library librelay_node.so[0m
+[13.118s] [ 18%] Built target relay_node
+[13.159s] [ 21%] [32mBuilding CXX object CMakeFiles/throttle_node.dir/src/throttle_node.cpp.o[0m
+[13.164s] [ 24%] [32mBuilding CXX object CMakeFiles/relay.dir/src/relay.cpp.o[0m
+[13.176s] [ 27%] [32mBuilding CXX object CMakeFiles/throttle_node.dir/src/tool_base_node.cpp.o[0m
+[20.109s] [ 29%] [32m[1mLinking CXX executable relay[0m
+[20.523s] [ 29%] Built target relay
+[22.009s] [ 32%] [32m[1mLinking CXX shared library libthrottle_node.so[0m
+[22.256s] [ 32%] Built target throttle_node
+[22.283s] [ 35%] [32mBuilding CXX object CMakeFiles/test_relay.dir/test/test_relay.cpp.o[0m
+[36.205s] [ 37%] [32m[1mLinking CXX executable test_relay[0m
+[37.423s] [ 37%] Built target test_relay
+[37.538s] [ 40%] [32mBuilding CXX object CMakeFiles/test_throttle.dir/test/test_throttle.cpp.o[0m
+[51.888s] [ 43%] [32m[1mLinking CXX executable test_throttle[0m
+[52.490s] [ 43%] Built target test_throttle
+[52.516s] [ 51%] [32mBuilding CXX object CMakeFiles/drop_node.dir/src/drop_node.cpp.o[0m
+[52.516s] [ 51%] [32mBuilding CXX object CMakeFiles/drop_node.dir/src/tool_base_node.cpp.o[0m
+[52.516s] [ 51%] [32mBuilding CXX object CMakeFiles/throttle.dir/src/throttle.cpp.o[0m
+[55.876s] [ 54%] [32m[1mLinking CXX executable throttle[0m
+[56.057s] [ 54%] Built target throttle
+[57.372s] [ 56%] [32m[1mLinking CXX shared library libdrop_node.so[0m
+[57.612s] [ 56%] Built target drop_node
+[57.638s] [ 62%] [32mBuilding CXX object CMakeFiles/mux_node.dir/src/tool_base_node.cpp.o[0m
+[57.638s] [ 62%] [32mBuilding CXX object CMakeFiles/test_drop.dir/test/test_drop.cpp.o[0m
+[57.641s] [ 67%] [32mBuilding CXX object CMakeFiles/mux_node.dir/src/mux_node.cpp.o[0m
+[57.641s] [ 67%] [32mBuilding CXX object CMakeFiles/drop.dir/src/drop.cpp.o[0m
+[63.028s] [ 70%] [32m[1mLinking CXX executable drop[0m
+[63.341s] [ 70%] Built target drop
+[66.975s] [ 72%] [32m[1mLinking CXX shared library libmux_node.so[0m
+[67.408s] [ 72%] Built target mux_node
+[67.436s] [ 75%] [32mBuilding CXX object CMakeFiles/test_mux.dir/test/test_mux.cpp.o[0m
+[67.436s] [ 78%] [32mBuilding CXX object CMakeFiles/mux.dir/src/mux.cpp.o[0m
+[67.437s] [ 81%] [32mBuilding CXX object CMakeFiles/delay_node.dir/src/delay_node.cpp.o[0m
+[67.442s] [ 83%] [32mBuilding CXX object CMakeFiles/delay_node.dir/src/tool_base_node.cpp.o[0m
+[72.485s] [ 86%] [32m[1mLinking CXX executable test_drop[0m
+[73.205s] [ 89%] [32m[1mLinking CXX executable mux[0m
+[73.616s] [ 89%] Built target mux
+[73.672s] [ 89%] Built target test_drop
+[75.551s] [ 91%] [32m[1mLinking CXX shared library libdelay_node.so[0m
+[75.818s] [ 91%] Built target delay_node
+[75.843s] [ 94%] [32mBuilding CXX object CMakeFiles/delay.dir/src/delay.cpp.o[0m
+[79.259s] [ 97%] [32m[1mLinking CXX executable delay[0m
+[79.441s] [ 97%] Built target delay
+[81.572s] [100%] [32m[1mLinking CXX executable test_mux[0m
+[82.259s] [100%] Built target test_mux
+[82.273s] Invoked command in '/home/g5/dd2419_ws/build/topic_tools' returned '0': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake --build /home/g5/dd2419_ws/build/topic_tools -- -j8 -l8
+[82.379s] Invoking command in '/home/g5/dd2419_ws/build/topic_tools': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake --install /home/g5/dd2419_ws/build/topic_tools
+[82.388s] -- Install configuration: ""
+[82.389s] -- Execute custom install script
+[82.389s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/pythonpath.sh
+[82.400s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/pythonpath.dsv
+[82.410s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools-1.3.0-py3.10.egg-info/PKG-INFO
+[82.421s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools-1.3.0-py3.10.egg-info/SOURCES.txt
+[82.432s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools-1.3.0-py3.10.egg-info/dependency_links.txt
+[82.442s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools-1.3.0-py3.10.egg-info/entry_points.txt
+[82.452s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools-1.3.0-py3.10.egg-info/top_level.txt
+[82.462s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools//relay_field
+[82.472s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools//transform
+[82.483s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/__init__.py
+[82.493s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/relay_field.py
+[82.503s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/setup.cfg
+[82.514s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/transform.py
+[82.524s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/delay_node.hpp
+[82.534s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/drop_node.hpp
+[82.544s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/mux_node.hpp
+[82.554s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/relay_node.hpp
+[82.565s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/throttle_node.hpp
+[82.575s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/tool_base_node.hpp
+[82.585s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/include/topic_tools/visibility_control.h
+[82.595s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/library_path.sh
+[82.606s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/library_path.dsv
+[82.616s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/librelay_node.so
+[82.626s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/libthrottle_node.so
+[82.636s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/libdrop_node.so
+[82.646s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/libmux_node.so
+[82.657s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/libdelay_node.so
+[82.667s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools/relay
+[82.677s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools/throttle
+[82.688s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools/drop
+[82.698s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools/mux
+[82.708s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/lib/topic_tools/delay
+[82.719s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/launch/relay.launch
+[82.730s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/ament_index/resource_index/package_run_dependencies/topic_tools
+[82.740s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/ament_index/resource_index/parent_prefix_path/topic_tools
+[82.750s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/ament_prefix_path.sh
+[82.760s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/ament_prefix_path.dsv
+[82.771s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/path.sh
+[82.781s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/environment/path.dsv
+[82.791s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/local_setup.bash
+[82.802s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/local_setup.sh
+[82.812s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/local_setup.zsh
+[82.822s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/local_setup.dsv
+[82.833s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/package.dsv
+[82.843s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/ament_index/resource_index/packages/topic_tools
+[82.854s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/ament_index/resource_index/rclcpp_components/topic_tools
+[82.865s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/cmake/ament_cmake_export_dependencies-extras.cmake
+[82.875s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/cmake/ament_cmake_export_include_directories-extras.cmake
+[82.885s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/cmake/ament_cmake_export_libraries-extras.cmake
+[82.895s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/cmake/topic_toolsConfig.cmake
+[82.908s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/cmake/topic_toolsConfig-version.cmake
+[82.918s] -- Symlinking: /home/g5/dd2419_ws/install/topic_tools/share/topic_tools/package.xml
+[82.977s] Listing '/home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools'...
+[82.977s] Compiling '/home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/__init__.py'...
+[82.977s] Compiling '/home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/relay_field.py'...
+[82.977s] Compiling '/home/g5/dd2419_ws/install/topic_tools/local/lib/python3.10/dist-packages/topic_tools/transform.py'...
+[82.984s] Invoked command in '/home/g5/dd2419_ws/build/topic_tools' returned '0': CMAKE_PREFIX_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces:/home/g5/dd2419_ws/install/topic_tools:/home/g5/dd2419_ws/install/rplidar_ros:/home/g5/dd2419_ws/install/robp_phidgets_temperature:/home/g5/dd2419_ws/install/robp_phidgets_spatial:/home/g5/dd2419_ws/install/robp_phidgets_motors:/home/g5/dd2419_ws/install/robp_phidgets_encoders:/home/g5/dd2419_ws/install/robp_boot_camp_motors:/home/g5/dd2419_ws/install/robp_interfaces:/home/g5/dd2419_ws/install/robp_boot_camp_world:/home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces:/home/g5/dd2419_ws/install/micro_ros_setup:/home/g5/dd2419_ws/install/micro_ros_agent:/home/g5/dd2419_ws/install/micro_ros_msgs:/home/g5/dd2419_ws/install/kobuki_softnode:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble LD_LIBRARY_PATH=/home/g5/dd2419_ws/install/topic_tools_interfaces/lib:/home/g5/dd2419_ws/install/topic_tools/lib:/home/g5/dd2419_ws/install/rplidar_ros/lib:/home/g5/dd2419_ws/install/robp_phidgets_temperature/lib:/home/g5/dd2419_ws/install/robp_phidgets_spatial/lib:/home/g5/dd2419_ws/install/robp_phidgets_motors/lib:/home/g5/dd2419_ws/install/robp_phidgets_encoders/lib:/home/g5/dd2419_ws/install/robp_interfaces/lib:/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/lib:/home/g5/dd2419_ws/install/micro_ros_agent/lib:/home/g5/dd2419_ws/install/micro_ros_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/opt/libphidget22/lib:/opt/ros/humble/lib /usr/bin/cmake --install /home/g5/dd2419_ws/build/topic_tools

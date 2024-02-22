@@ -1,0 +1,67 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.7 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found geometry_msgs: 4.2.3 (/opt/ros/humble/share/geometry_msgs/cmake)
+-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rclcpp: 16.0.8 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+-- Found FastRTPS: /opt/ros/humble/include  
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Found robp_boot_camp_interfaces: 1.0.0 (/home/g5/dd2419_ws/install/robp_boot_camp_interfaces/share/robp_boot_camp_interfaces/cmake)
+-- Found tf2: 0.25.5 (/opt/ros/humble/share/tf2/cmake)
+-- Found tf2_geometry_msgs: 0.25.5 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+-- Found Eigen3: TRUE (found version "3.4.0") 
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Found visualization_msgs: 4.2.3 (/opt/ros/humble/share/visualization_msgs/cmake)
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: random 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/g5/dd2419_ws/build/robp_boot_camp_distance_sensor
+[  0%] Built target copy_distance_sensor_lib
+[ 50%] [32mBuilding CXX object CMakeFiles/distance_sensor_node.dir/src/distance_sensor_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable distance_sensor_node[0m
+[100%] Built target distance_sensor_node
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/lib/robp_boot_camp_distance_sensor/distance_sensor_node
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor//launch/distance_sensor_launch.xml
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/ament_index/resource_index/package_run_dependencies/robp_boot_camp_distance_sensor
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/ament_index/resource_index/parent_prefix_path/robp_boot_camp_distance_sensor
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/environment/ament_prefix_path.sh
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/environment/ament_prefix_path.dsv
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/environment/path.sh
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/environment/path.dsv
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/local_setup.bash
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/local_setup.sh
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/local_setup.zsh
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/local_setup.dsv
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/package.dsv
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/ament_index/resource_index/packages/robp_boot_camp_distance_sensor
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/cmake/robp_boot_camp_distance_sensorConfig.cmake
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/cmake/robp_boot_camp_distance_sensorConfig-version.cmake
+-- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/share/robp_boot_camp_distance_sensor/package.xml
+-- Installing: /home/g5/dd2419_ws/install/robp_boot_camp_distance_sensor/lib/robp_boot_camp_distance_sensor/libdistance_sensor.so

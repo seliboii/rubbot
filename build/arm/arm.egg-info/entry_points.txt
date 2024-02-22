@@ -1,0 +1,4 @@
+[console_scripts]
+arm_control = arm.arm_control:main
+arm_ik = arm.arm_ik:main
+

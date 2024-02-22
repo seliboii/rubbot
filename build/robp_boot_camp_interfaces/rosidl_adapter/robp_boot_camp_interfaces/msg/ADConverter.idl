@@ -1,0 +1,28 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from robp_boot_camp_interfaces/msg/ADConverter.msg
+// generated code does not contain a copyright notice
+
+
+module robp_boot_camp_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "8 * uint16 for IR sensors")
+    struct ADConverter {
+      uint16 ch1;
+
+      uint16 ch2;
+
+      uint16 ch3;
+
+      uint16 ch4;
+
+      uint16 ch5;
+
+      uint16 ch6;
+
+      uint16 ch7;
+
+      uint16 ch8;
+    };
+  };
+};

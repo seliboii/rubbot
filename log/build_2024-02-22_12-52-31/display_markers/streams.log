@@ -1,0 +1,28 @@
+[2.540s] Invoking command in '/home/g5/dd2419_ws/build/display_markers': PYTHONPATH=/home/g5/dd2419_ws/build/display_markers/prefix_override:/home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/display_markers/build --no-deps install_data
+[3.103s] running develop
+[3.104s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[3.104s]   warnings.warn(
+[3.108s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[3.109s]   warnings.warn(
+[3.565s] running egg_info
+[3.566s] creating display_markers.egg-info
+[3.569s] writing display_markers.egg-info/PKG-INFO
+[3.570s] writing dependency_links to display_markers.egg-info/dependency_links.txt
+[3.571s] writing entry points to display_markers.egg-info/entry_points.txt
+[3.571s] writing requirements to display_markers.egg-info/requires.txt
+[3.572s] writing top-level names to display_markers.egg-info/top_level.txt
+[3.573s] writing manifest file 'display_markers.egg-info/SOURCES.txt'
+[3.576s] reading manifest file 'display_markers.egg-info/SOURCES.txt'
+[3.578s] writing manifest file 'display_markers.egg-info/SOURCES.txt'
+[3.581s] running build_ext
+[3.582s] Creating /home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages/display-markers.egg-link (link to .)
+[3.583s] Installing display_markers script to /home/g5/dd2419_ws/install/display_markers/lib/display_markers
+[3.584s] 
+[3.584s] Installed /home/g5/dd2419_ws/build/display_markers
+[3.585s] running install_data
+[3.585s] creating /home/g5/dd2419_ws/install/display_markers/share/ament_index
+[3.585s] creating /home/g5/dd2419_ws/install/display_markers/share/ament_index/resource_index
+[3.585s] creating /home/g5/dd2419_ws/install/display_markers/share/ament_index/resource_index/packages
+[3.585s] copying resource/display_markers -> /home/g5/dd2419_ws/install/display_markers/share/ament_index/resource_index/packages
+[3.585s] copying package.xml -> /home/g5/dd2419_ws/install/display_markers/share/display_markers
+[3.954s] Invoked command in '/home/g5/dd2419_ws/build/display_markers' returned '0': PYTHONPATH=/home/g5/dd2419_ws/build/display_markers/prefix_override:/home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/display_markers/build --no-deps install_data

@@ -1,0 +1,16 @@
+/home/g5/dd2419_ws/install/robp_boot_camp_world/lib/robp_boot_camp_world/world
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/package_run_dependencies/robp_boot_camp_world
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/parent_prefix_path/robp_boot_camp_world
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/ament_prefix_path.sh
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/ament_prefix_path.dsv
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/path.sh
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/path.dsv
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.bash
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.sh
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.zsh
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.dsv
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/package.dsv
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/packages/robp_boot_camp_world
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/cmake/robp_boot_camp_worldConfig.cmake
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/cmake/robp_boot_camp_worldConfig-version.cmake
+/home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/package.xml

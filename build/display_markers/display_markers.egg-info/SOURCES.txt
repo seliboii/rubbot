@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+display_markers/__init__.py
+display_markers/display_markers.py
+display_markers.egg-info/PKG-INFO
+display_markers.egg-info/SOURCES.txt
+display_markers.egg-info/dependency_links.txt
+display_markers.egg-info/entry_points.txt
+display_markers.egg-info/requires.txt
+display_markers.egg-info/top_level.txt
+display_markers.egg-info/zip-safe
+resource/display_markers

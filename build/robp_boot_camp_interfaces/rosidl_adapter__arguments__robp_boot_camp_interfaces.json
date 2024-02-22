@@ -1,0 +1,6 @@
+{
+  "package_name": "robp_boot_camp_interfaces",
+  "non_idl_tuples": [
+    "/home/g5/dd2419_ws/src/robp_boot_camp/robp_boot_camp_interfaces:msg/ADConverter.msg"
+  ]
+}

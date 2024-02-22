@@ -1,0 +1,19 @@
+running develop
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running egg_info
+writing odometry.egg-info/PKG-INFO
+writing dependency_links to odometry.egg-info/dependency_links.txt
+writing entry points to odometry.egg-info/entry_points.txt
+writing requirements to odometry.egg-info/requires.txt
+writing top-level names to odometry.egg-info/top_level.txt
+reading manifest file 'odometry.egg-info/SOURCES.txt'
+writing manifest file 'odometry.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/g5/dd2419_ws/install/odometry/lib/python3.10/site-packages/odometry.egg-link (link to .)
+Installing odometry script to /home/g5/dd2419_ws/install/odometry/lib/odometry
+
+Installed /home/g5/dd2419_ws/build/odometry
+running install_data

@@ -1,0 +1,10 @@
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/uninstall.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/robp_phidgets_spatial_uninstall.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/robp_phidgets_spatial.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/test.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/edit_cache.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/rebuild_cache.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/list_install_components.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/install.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/install/local.dir
+/home/g5/dd2419_ws/build/robp_phidgets_spatial/CMakeFiles/install/strip.dir

@@ -1,0 +1,8 @@
+setup.py
+robp_boot_camp_interfaces/__init__.py
+robp_boot_camp_interfaces.egg-info/PKG-INFO
+robp_boot_camp_interfaces.egg-info/SOURCES.txt
+robp_boot_camp_interfaces.egg-info/dependency_links.txt
+robp_boot_camp_interfaces.egg-info/top_level.txt
+robp_boot_camp_interfaces/msg/__init__.py
+robp_boot_camp_interfaces/msg/_ad_converter.py

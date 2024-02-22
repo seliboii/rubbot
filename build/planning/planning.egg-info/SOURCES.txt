@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+planning/__init__.py
+planning/planning-14-02-2024.py
+planning/planning.py
+planning/planning_secondbackup.py
+planning/plannning_backup.py
+planning.egg-info/PKG-INFO
+planning.egg-info/SOURCES.txt
+planning.egg-info/dependency_links.txt
+planning.egg-info/entry_points.txt
+planning.egg-info/requires.txt
+planning.egg-info/top_level.txt
+planning.egg-info/zip-safe
+resource/planning

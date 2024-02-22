@@ -1,0 +1,21 @@
+[3.368s] Invoking command in '/home/g5/dd2419_ws/build/display_markers': PYTHONPATH=/home/g5/dd2419_ws/build/display_markers/prefix_override:/home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/display_markers/build --no-deps install_data
+[3.953s] running develop
+[3.954s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[3.954s]   warnings.warn(
+[3.959s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[3.960s]   warnings.warn(
+[4.243s] running egg_info
+[4.244s] writing display_markers.egg-info/PKG-INFO
+[4.244s] writing dependency_links to display_markers.egg-info/dependency_links.txt
+[4.244s] writing entry points to display_markers.egg-info/entry_points.txt
+[4.244s] writing requirements to display_markers.egg-info/requires.txt
+[4.244s] writing top-level names to display_markers.egg-info/top_level.txt
+[4.248s] reading manifest file 'display_markers.egg-info/SOURCES.txt'
+[4.249s] writing manifest file 'display_markers.egg-info/SOURCES.txt'
+[4.251s] running build_ext
+[4.252s] Creating /home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages/display-markers.egg-link (link to .)
+[4.253s] Installing display_markers script to /home/g5/dd2419_ws/install/display_markers/lib/display_markers
+[4.253s] 
+[4.253s] Installed /home/g5/dd2419_ws/build/display_markers
+[4.254s] running install_data
+[5.475s] Invoked command in '/home/g5/dd2419_ws/build/display_markers' returned '0': PYTHONPATH=/home/g5/dd2419_ws/build/display_markers/prefix_override:/home/g5/dd2419_ws/install/display_markers/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/g5/dd2419_ws/build/display_markers/build --no-deps install_data

@@ -1,0 +1,69 @@
+[0.360s] Invoking command in '/home/g5/dd2419_ws/build/robp_boot_camp_world': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake /home/g5/dd2419_ws/src/robp_boot_camp/robp_boot_camp_world -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/g5/dd2419_ws/install/robp_boot_camp_world
+[0.509s] -- The C compiler identification is GNU 11.4.0
+[0.671s] -- The CXX compiler identification is GNU 11.4.0
+[0.685s] -- Detecting C compiler ABI info
+[0.815s] -- Detecting C compiler ABI info - done
+[0.831s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.832s] -- Detecting C compile features
+[0.833s] -- Detecting C compile features - done
+[0.849s] -- Detecting CXX compiler ABI info
+[1.009s] -- Detecting CXX compiler ABI info - done
+[1.028s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.029s] -- Detecting CXX compile features
+[1.030s] -- Detecting CXX compile features - done
+[1.034s] -- Found ament_cmake: 1.3.7 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.376s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.12") found components: Interpreter 
+[1.517s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.551s] -- Found angles: 1.15.0 (/opt/ros/humble/share/angles/cmake)
+[1.555s] -- Found geometry_msgs: 4.2.3 (/opt/ros/humble/share/geometry_msgs/cmake)
+[1.621s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.630s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.645s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.673s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.713s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.969s] -- Found rclcpp: 16.0.8 (/opt/ros/humble/share/rclcpp/cmake)
+[2.095s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[2.102s] -- Found rmw_fastrtps_cpp: 6.2.6 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[2.348s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[2.409s] -- Found FastRTPS: /opt/ros/humble/include  
+[2.504s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.522s] -- Looking for pthread.h
+[2.697s] -- Looking for pthread.h - found
+[2.697s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[2.840s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[2.842s] -- Found Threads: TRUE  
+[3.108s] -- Found std_srvs: 4.2.3 (/opt/ros/humble/share/std_srvs/cmake)
+[3.142s] -- Found tf2_geometry_msgs: 0.25.5 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[3.170s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[3.173s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[3.173s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[4.266s] -- Found visualization_msgs: 4.2.3 (/opt/ros/humble/share/visualization_msgs/cmake)
+[6.119s] -- Configuring done
+[6.221s] -- Generating done
+[6.234s] -- Build files have been written to: /home/g5/dd2419_ws/build/robp_boot_camp_world
+[6.317s] Invoked command in '/home/g5/dd2419_ws/build/robp_boot_camp_world' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake /home/g5/dd2419_ws/src/robp_boot_camp/robp_boot_camp_world -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/g5/dd2419_ws/install/robp_boot_camp_world
+[6.318s] Invoking command in '/home/g5/dd2419_ws/build/robp_boot_camp_world': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake --build /home/g5/dd2419_ws/build/robp_boot_camp_world -- -j8 -l8
+[16.234s] [ 50%] [32mBuilding CXX object CMakeFiles/world.dir/src/world.cpp.o[0m
+[25.779s] [100%] [32m[1mLinking CXX executable world[0m
+[26.373s] [100%] Built target world
+[26.415s] Invoked command in '/home/g5/dd2419_ws/build/robp_boot_camp_world' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake --build /home/g5/dd2419_ws/build/robp_boot_camp_world -- -j8 -l8
+[26.637s] Invoking command in '/home/g5/dd2419_ws/build/robp_boot_camp_world': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake --install /home/g5/dd2419_ws/build/robp_boot_camp_world
+[29.312s] -- Install configuration: ""
+[29.312s] -- Execute custom install script
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/lib/robp_boot_camp_world/world
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/package_run_dependencies/robp_boot_camp_world
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/parent_prefix_path/robp_boot_camp_world
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/ament_prefix_path.sh
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/ament_prefix_path.dsv
+[29.312s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/path.sh
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/environment/path.dsv
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.bash
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.sh
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.zsh
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/local_setup.dsv
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/package.dsv
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/ament_index/resource_index/packages/robp_boot_camp_world
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/cmake/robp_boot_camp_worldConfig.cmake
+[29.313s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/cmake/robp_boot_camp_worldConfig-version.cmake
+[29.314s] -- Symlinking: /home/g5/dd2419_ws/install/robp_boot_camp_world/share/robp_boot_camp_world/package.xml
+[29.331s] Invoked command in '/home/g5/dd2419_ws/build/robp_boot_camp_world' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/g5/dd2419_ws/install/robp_launch:/home/g5/dd2419_ws/install/robp_boot_camp_launch:/home/g5/dd2419_ws/install/odometry:/home/g5/dd2419_ws/install/controller:/home/g5/dd2419_ws/install/control:/home/g5/dd2419_ws/install/arm:/home/g5/dd2419_ws/install/planning:/home/g5/dd2419_ws/install/kobuki_description:/home/g5/dd2419_ws/install/display_markers:/home/g5/dd2419_ws/install/detection:/home/g5/dd2419_ws/install/arm_servos_pubs_subs:/opt/ros/humble /usr/bin/cmake --install /home/g5/dd2419_ws/build/robp_boot_camp_world

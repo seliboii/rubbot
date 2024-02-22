@@ -1,0 +1,10 @@
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/uninstall.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/robp_phidgets_encoders_uninstall.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/robp_phidgets_encoders.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/test.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/edit_cache.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/rebuild_cache.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/list_install_components.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/install.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/install/local.dir
+/home/g5/dd2419_ws/build/robp_phidgets_encoders/CMakeFiles/install/strip.dir

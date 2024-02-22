@@ -1,0 +1,23 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from robp_interfaces/msg/ObjPos.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module robp_interfaces {
+  module msg {
+    struct ObjPos {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "Activation of the arm, 0 to stop, 1 to PickUp, 2 to Drop")
+      int32 activate;
+
+      @verbatim (language="comment", text=
+        "Position of the object from the base link")
+      double x;
+
+      double y;
+    };
+  };
+};
