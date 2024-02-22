@@ -1,3 +1,0 @@
-[console_scripts]
-planning = planning.planning:main
-

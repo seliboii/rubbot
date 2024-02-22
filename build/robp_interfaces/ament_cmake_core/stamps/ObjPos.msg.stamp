@@ -1,7 +1,0 @@
-std_msgs/Header header
-
-# Activation of the arm, 0 to stop, 1 to PickUp, 2 to Drop
-int32 activate
-# Position of the object from the base link
-float64 x
-float64 y

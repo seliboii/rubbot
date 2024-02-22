@@ -1,1 +1,0 @@
-/home/g5/dd2419_ws/src/robp_robot/robp_launch/launch/front_camera_launch.py

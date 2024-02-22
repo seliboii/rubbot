@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/g5/dd2419_ws/build/robp_boot_camp_distance_sensor/distance_sensor_node" "TARGETS" "distance_sensor_node" "DESTINATION" "lib/robp_boot_camp_distance_sensor")

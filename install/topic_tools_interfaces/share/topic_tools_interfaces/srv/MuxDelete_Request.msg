@@ -1,1 +1,0 @@
-/home/g5/dd2419_ws/build/topic_tools_interfaces/rosidl_cmake/srv/MuxDelete_Request.msg

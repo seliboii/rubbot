@@ -1,8 +1,0 @@
-source;share/robp_boot_camp_distance_sensor/hook/cmake_prefix_path.ps1
-source;share/robp_boot_camp_distance_sensor/hook/cmake_prefix_path.dsv
-source;share/robp_boot_camp_distance_sensor/hook/cmake_prefix_path.sh
-source;share/robp_boot_camp_distance_sensor/local_setup.bash
-source;share/robp_boot_camp_distance_sensor/local_setup.dsv
-source;share/robp_boot_camp_distance_sensor/local_setup.ps1
-source;share/robp_boot_camp_distance_sensor/local_setup.sh
-source;share/robp_boot_camp_distance_sensor/local_setup.zsh

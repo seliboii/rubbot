@@ -1,1 +1,0 @@
-/home/g5/dd2419_ws/build/rplidar_ros/ament_cmake_core/rplidar_rosConfig.cmake

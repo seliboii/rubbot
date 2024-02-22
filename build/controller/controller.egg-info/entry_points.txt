@@ -1,8 +1,0 @@
-[console_scripts]
-cartesian_axel = controller.cartesian_axel:main
-cartesian_carl = controller.cartesian_carl:main
-cartesian_controller = controller.cartesian_controller:main
-milestone1_goal = controller.milestone1_goal:main
-open_loop_controller = controller.open_loop_controller:main
-wall_following_controller = controller.wall_following_controller:main
-

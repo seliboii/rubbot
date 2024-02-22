@@ -1,8 +1,0 @@
-{
-  "package_name": "micro_ros_msgs",
-  "non_idl_tuples": [
-    "/home/g5/dd2419_ws/src/uros/micro_ros_msgs:msg/Graph.msg",
-    "/home/g5/dd2419_ws/src/uros/micro_ros_msgs:msg/Node.msg",
-    "/home/g5/dd2419_ws/src/uros/micro_ros_msgs:msg/Entity.msg"
-  ]
-}
