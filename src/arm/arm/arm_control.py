@@ -44,6 +44,7 @@ class ArmControl(Node):
         self.s4 = 0
         self.s3 = 0
         self.count = 0
+        self.last_pos = []
     
     def working(self):
         msg = Bool()
@@ -54,6 +55,7 @@ class ArmControl(Node):
         msg = Bool()
         msg.data = False
         self.robstate_pub.publish(msg)
+
 
     def pos_callback(self,msg):
         if msg.data[0] != 0:
@@ -69,7 +71,20 @@ class ArmControl(Node):
 
     def arm_callback(self):
         arm_msg = Int16MultiArray()
-        if self.act == 1:
+        if self.act == 0:
+            if self.last_pos != [-1, 12000, 7000, 20000, 16000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]:
+                arm_msg.data = [-1, 12000, 7000, 20000, 16000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.last_pos = [-1, 12000, 7000, 20000, 16000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.arm_move_pub.publish(arm_msg)
+                print('Control: State 0')
+        elif self.act == 1: #go to update position
+            if self.last_pos != [2000, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]:
+                arm_msg.data =[2000, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.last_pos = [2000, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.arm_move_pub.publish(arm_msg)
+                print('Control: State 1')
+        elif self.act == 2:
+            print('Control: State 2')
             if self.count == 0:
                 arm_msg.data = [2000, 12000, self.s3, self.s4, 12000, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
                 self.arm_move_pub.publish(arm_msg)
@@ -86,7 +101,7 @@ class ArmControl(Node):
                 self.working()
                 self.count += 1
             elif self.count ==  60:
-                arm_msg.data = [11000, 12000, 12000, 12000, 12000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                arm_msg.data = [-1, 12000, 7000, 20000, 16000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
                 self.arm_move_pub.publish(arm_msg)
                 self.working()
                 self.count += 1
@@ -97,29 +112,29 @@ class ArmControl(Node):
             else:
                 self.count += 1
                 self.working()
-        elif self.act == 2:
-            if self.count == 0:
-                arm_msg.data = [-1, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
-                self.arm_move_pub.publish(arm_msg)
-                self.working()
-                self.count += 1
-            elif self.count == 20:
-                arm_msg.data = [2000, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
-                self.arm_move_pub.publish(arm_msg)
-                self.working()
-                self.count += 1
-            elif self.count ==  40:
-                arm_msg.data = [2000, 12000, 12000, 12000, 12000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
-                self.arm_move_pub.publish(arm_msg)
-                self.working()
-                self.count += 1
-            elif self.count == 55:
-                self.notworking()
-                self.count = 0
-                self.act = 0
-            else:
-                self.count += 1
-                self.working()
+        # elif self.act == 3:
+        #     if self.count == 0:
+        #         arm_msg.data = [-1, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
+        #         self.arm_move_pub.publish(arm_msg)
+        #         self.working()
+        #         self.count += 1
+        #     elif self.count == 20:
+        #         arm_msg.data = [2000, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
+        #         self.arm_move_pub.publish(arm_msg)
+        #         self.working()
+        #         self.count += 1
+        #     elif self.count ==  40:
+        #         arm_msg.data = [2000, 12000, 12000, 12000, 12000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+        #         self.arm_move_pub.publish(arm_msg)
+        #         self.working()
+        #         self.count += 1
+        #     elif self.count == 55:
+        #         self.notworking()
+        #         self.count = 0
+        #         self.act = 0
+        #     else:
+        #         self.count += 1
+        #         self.working()
         else:
             self.notworking()
 
