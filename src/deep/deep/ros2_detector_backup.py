@@ -15,8 +15,9 @@ import cv2
 import torch
 import shutil
 from map_msgs.msg import OccupancyGridUpdate
+from sensor_msgs.msg import PointField
 
-from detector4 import Detector
+from .detector4 import Detector
 
 class Ros2Detector(Node):
     def __init__(self):
@@ -39,7 +40,7 @@ class Ros2Detector(Node):
         self.subscription_gripper_info = self.create_subscription(Image, '/camera1/camera_info', self.gripper_info_callback, 10)
 
         self.publisher_pointcloud = self.create_publisher(PointCloud2, 'pointcloud', 10)
-        self.publisher_occupancy_grid_update = self.create_publisher(OccupancyGridUpdate, 'occupancy_grid_update', 10)
+        self.publisher_occupancy_grid_update = self.create_publisher(OccupancyGridUpdate, 'occupancy_grid_updates', 10)
 
         
         self.gripcam_resolution = (640, 480)  # Resolution of image_rect topic
@@ -54,6 +55,8 @@ class Ros2Detector(Node):
         self.tf_frame_ids = {}
         self.last_save_time = time.time()
 
+        self.detected_poses = {}
+
     def depth_info_callback(self, msg):
         self.depth_info = msg
 
@@ -65,7 +68,9 @@ class Ros2Detector(Node):
         self.depth_received = True
 
     def load_model(self):
-        model_path = "modelV3.pt"
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        model_path = os.path.join(script_dir, "modelV3.pt")
+        #model_path = "modelV3.pt"
         state_dict = torch.load(model_path, map_location=torch.device('cpu'))
         self.detector.load_state_dict(state_dict)
 
@@ -166,13 +171,13 @@ class Ros2Detector(Node):
             displacement_x = bb_center_x - img_center_x
             displacement_y = bb_center_y - img_center_y
 
-            displacement_x = (displacement_x * 22) / 640
-            displacement_y = -(displacement_y * 17.5) / 480
+            displacement_x = (displacement_x * 27) / 640
+            displacement_y = -(displacement_y * 19.5) / 480
 
             center_position = Point()
             center_position.x = displacement_x/100
             center_position.y = displacement_y/100
-            center_position.z = 16.5/100
+            center_position.z = 20/100
 
             self.publisher_gripper_position.publish(center_position)
 
@@ -206,6 +211,7 @@ class Ros2Detector(Node):
         bb_list = []  
 
         label_counts = {}
+        depth_values = []  # List to hold pointcloud points inside the bounding box
 
         for bb in resized_bbs:
             x, y, width, height = bb['x'], bb['y'], bb['width'], bb['height']
@@ -216,6 +222,64 @@ class Ros2Detector(Node):
             if pointcloud_point is None:
                 continue
             final_x, final_y, depth = pointcloud_point
+
+            # Iterate through all points inside the bounding box
+            for px in range(x, x + width):
+                for py in range(y, y + height):
+                    pointcloud_point = 1 #self.get_pointcloud_at_point(px, py)
+                    if pointcloud_point is not None:
+                        #x1,y1, depth = pointcloud_point  # Extract depth from the point
+                        #depth_values.append(depth)  # Append depth to the list
+                        depth_values.append(pointcloud_point)
+
+            depth_values = [100] * len(depth_values)
+            #print(depth_values)
+            
+            # x2, y2, z2 = self.get_pointcloud_at_point (x,y)
+            # xbb, ybb, zbb = self.get_pointcloud_at_point(x + width, y)
+            # width2 = xbb - x2
+            # xbb2, ybb2, zbb2 = self.get_pointcloud_at_point(x,y+ height)
+            # height2 = ybb2 - y2
+            width2 = 0
+            height2 = 0
+            # Retrieve pointcloud points at the corners of the bounding box
+            pointcloud_point_top_left = self.get_pointcloud_at_point(x, y)
+            pointcloud_point_top_right = self.get_pointcloud_at_point(x + width, y)
+            pointcloud_point_bottom_left = self.get_pointcloud_at_point(x, y + height)
+
+            # Check if all corner points are valid before unpacking
+            if (pointcloud_point_top_left is not None) and \
+            (pointcloud_point_top_right is not None) and \
+            (pointcloud_point_bottom_left is not None):
+
+                # Unpack corner points
+                x2, y2, z2 = pointcloud_point_top_left
+                xbb, ybb, zbb = pointcloud_point_top_right
+                width2 = zbb - z2
+                xbb2, ybb2, zbb2 = pointcloud_point_bottom_left
+                height2 = xbb2 - x2
+
+            res = 0.01
+
+            #transfrom from camera_link to map frame
+
+
+            if depth_values and width2 and height2:
+                # Create an occupancy grid update message
+                occupancy_grid_update_msg = OccupancyGridUpdate()
+                occupancy_grid_update_msg.header.stamp = self.get_clock().now().to_msg()
+                occupancy_grid_update_msg.header.frame_id = 'camera_link'
+                occupancy_grid_update_msg.x = int(4/(res))+int((z2)/(res*1000))  # The x-coordinate of the bounding box
+                occupancy_grid_update_msg.y = int(2/(res))-int((x2)/(res*1000)) # The y-coordinate of the bounding box
+                occupancy_grid_update_msg.width = int(15) #int(4/res)+int(width2/res*1000) #int(15)  # The width of the bounding box
+                occupancy_grid_update_msg.height = int(25)#int(2/res)-int(height2/res*1000) #int(15)  # The height of the bounding box
+                occupancy_grid_update_msg.data = depth_values  # Depth values
+                
+                print(occupancy_grid_update_msg.x)
+                print(occupancy_grid_update_msg.y)
+                # Publish the occupancy grid update message
+                self.publisher_occupancy_grid_update.publish(occupancy_grid_update_msg)
+
 
             pose_msg = PoseStamped()
             pose_msg.header.stamp = self.get_clock().now().to_msg() 
@@ -260,6 +324,20 @@ class Ros2Detector(Node):
                 image_id = msg.header.stamp.sec
                 self.save_image_with_bb(cv_image.copy(), resized_bbs, image_id, "Pictures")
                 self.last_save_time = current_time
+            
+            # Store the detected pose
+            if label not in self.detected_poses:
+                self.detected_poses[label] = []
+            self.detected_poses[label].append(pose_msg)
+            
+            print("Detected Poses:")
+            for label, poses_list in self.detected_poses.items():
+                print(f"Label: {label}")
+                print("Poses:")
+                for pose_msg in poses_list:
+                    print(pose_msg)
+                print()  # Print an empty line for readability between different labels
+
 
         msg_with_bounding_box = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
         self.publisher_realsense.publish(msg_with_bounding_box)

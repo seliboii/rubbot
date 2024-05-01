@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+import rclpy
+from rclpy.node import Node
+
 """Baseline detector model.
 
 Inspired by
@@ -184,7 +189,7 @@ class Detector(nn.Module):
 
                 # Find the label with maximum probability
                 label_probs = o[5:, bb_index[0], bb_index[1]]
-                label_probs = F.softmax(label_probs, dim=0)
+                #label_probs = F.softmax(label_probs, dim=0)
 
                 max_prob_label_idx = torch.argmax(label_probs).item()
                 max_prob_label_name = self.LABEL_NAMES.get(max_prob_label_idx, "Unknown")
@@ -273,3 +278,17 @@ class Detector(nn.Module):
                 target[i, 5 + category_id, y_ind, x_ind] = 1
 
         return target
+
+def main():
+    rclpy.init()
+    node = BoundingBox()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

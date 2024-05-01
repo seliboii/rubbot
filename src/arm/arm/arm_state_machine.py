@@ -68,7 +68,7 @@ class ARM_SM(Node):
 
         self.sm_to_ik_pub = self.create_publisher(
             Int16MultiArray,
-            'arm_ik/pos',
+            '/arm_ik/pos',
             10
         )
 
@@ -111,6 +111,15 @@ class ARM_SM(Node):
             10
         )
 
+        self.arm_pos_sub = self.create_subscription(
+            JointState,
+            '/servo_pos_publisher', #An pose with position for servo 3, 4, 5, 6, and conformation of activation
+            self.cam_pos_callback, 
+            10
+        )
+
+        self.timer = self.create_timer(0.1, self.state_machine_callback)
+
     
         self.state = 0
 
@@ -130,16 +139,33 @@ class ARM_SM(Node):
 
         self.arm_working = False
 
-        
+        self.command = ' '
+
+        self.fb_s1 = 0
+        self.fb_s2 = 0
+        self.fb_s3 = 0
+        self.fb_s4 = 0
+        self.fb_s5 = 0
+        self.fb_s6 = 0
+
+        self.pick_pose = [12000, 10000, 18000, 2200] # servo 6, servo 5, servo 4, servo 3
 
 
-    def arm_state_callback(self, msg):
-        # print(msg.data)
-        if msg.data == 'pick':
+    def cam_pos_callback(self,msg):
+        self.fb_s1 = msg.position[0]
+        self.fb_s2 = msg.position[1]
+        self.fb_s3 = msg.position[2]
+        self.fb_s4 = msg.position[3]
+        self.fb_s5 = msg.position[4]
+        self.fb_s6 = msg.position[5]
+
+    
+    def state_machine_callback(self):
+        if self.command == 'pick':
             print('pick state: ', self.state)
             if self.state == 0: #set camera to position for detecting object
                 arm_pos_msg = Int16MultiArray()
-                arm_pos_msg.data = [1, 12000, 10000, 18000, 2200] # 1 for hold this position
+                arm_pos_msg.data = [1, self.pick_pose[0], self.pick_pose[1], self.pick_pose[2], self.pick_pose[3]] # 1 for hold this position
                 self.pos_pub.publish(arm_pos_msg)
                 self.state = 1
                 self.point_count = 0
@@ -167,6 +193,7 @@ class ARM_SM(Node):
                     print('cannot pick up')
                     sm_msg = String()
                     sm_msg.data = 'deactive'
+                    self.command = 'deactive'
                     self.arm_state_pub.publish(sm_msg)
                     self.reset_arm
                 elif self.ik_sta == 'success':
@@ -177,12 +204,25 @@ class ARM_SM(Node):
             elif self.state == 4:
                 if not self.arm_working:
                     self.reset_arm   
-        elif msg.data == 'drop':
+        elif self.command == 'drop':
             print('drop state: ',self.state)
-
+            if self.state == 0:
+                arm_pos_msg = Int16MultiArray()
+                arm_pos_msg.data = [3, -1, 10000, -1, -1] # 1 for hold this position
+                self.pos_pub.publish(arm_pos_msg)
+                self.state = 1
+            elif self.state == 1:
+                if not self.arm_working:
+                    self.reset_arm
         else:
             self.reset_arm
 
+
+    def arm_state_callback(self, msg):
+        # print(msg.data)
+        if self.command != msg.data:
+            self.command = msg.data
+            self.state = 0
 
 
 
@@ -214,12 +254,15 @@ class ARM_SM(Node):
         # print('Msg Point x: ', msg.x)
 
         if self.point_count == 0.0 and self.previous_point_x != msg.x and self.state == 1:
-            self.previous_point_x = msg.x
-            self.previous_point_y = msg.y
-            self.point_count += 1.0
-            print('Camera data count: ', self.point_count)
-            self.point_stack_x += msg.x
-            self.point_stack_y += msg.y
+            if self.pick_pose[1] * 0.9 < self.fb_s5 and self.pick_pose[1] * 1.1 > self.fb_s5:
+                if self.pick_pose[2] * 0.9 < self.fb_s4 and self.pick_pose[2] * 1.1 > self.fb_s4:
+                    if self.pick_pose[3] * 0.9 < self.fb_s3 and self.pick_pose[3] * 1.1 > self.fb_s3:
+                        self.previous_point_x = msg.x
+                        self.previous_point_y = msg.y
+                        self.point_count += 1.0
+                        print('Camera data count: ', self.point_count)
+                        self.point_stack_x += msg.x
+                        self.point_stack_y += msg.y
             
         elif self.point_count < 5.0 and self.state == 1:
             if self.previous_point_x != msg.x:

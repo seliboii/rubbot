@@ -17,7 +17,7 @@ import shutil
 from map_msgs.msg import OccupancyGridUpdate
 from sensor_msgs.msg import PointField
 
-from detector4 import Detector
+from .detector4 import Detector
 
 class Ros2Detector(Node):
     def __init__(self):
@@ -68,7 +68,9 @@ class Ros2Detector(Node):
         self.depth_received = True
 
     def load_model(self):
-        model_path = "modelV3.pt"
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        model_path = os.path.join(script_dir, "modelV3.pt")
+        #model_path = "modelV3.pt"
         state_dict = torch.load(model_path, map_location=torch.device('cpu'))
         self.detector.load_state_dict(state_dict)
 
@@ -148,20 +150,20 @@ class Ros2Detector(Node):
             gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
             edges = cv2.Canny(gray_roi, 100, 150)  
                     
-            #moments = cv2.moments(edges)
-            #mu20 = moments['mu20']
-            #mu11 = moments['mu11']
-            #mu02 = moments['mu02']
-            #theta = 0.5 * np.arctan2(2 * mu11, (mu20 - mu02 + np.sqrt(4 * mu11**2 + (mu20 - mu02)**2)))
+            moments = cv2.moments(edges)
+            mu20 = moments['mu20']
+            mu11 = moments['mu11']
+            mu02 = moments['mu02']
+            theta = 0.5 * np.arctan2(2 * mu11, (mu20 - mu02 + np.sqrt(4 * mu11**2 + (mu20 - mu02)**2)))
                     
-            #theta_degrees = np.degrees(theta)
+            theta_degrees = np.degrees(theta)
 
-            #turning_angle = theta_degrees  
+            turning_angle = theta_degrees  
 
-            #if turning_angle > 10:
-                #angle_msg = Float64()
-                #angle_msg.data = 90 -(turning_angle)
-                #self.publisher_gripper_angle.publish(angle_msg)
+            if turning_angle > 10:
+                angle_msg = Float64()
+                angle_msg.data = 90 -(turning_angle)
+                self.publisher_gripper_angle.publish(angle_msg)
 
             img_center_x = cv_image.shape[1] // 2
             img_center_y = cv_image.shape[0] // 2
@@ -179,8 +181,8 @@ class Ros2Detector(Node):
 
             self.publisher_gripper_position.publish(center_position)
 
-            #displacement_text = f"Displacement: ({displacement_x}, {displacement_y})"
-            #cv2.putText(cv_image, displacement_text, (x, y - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 2)
+            displacement_text = f"Displacement: ({displacement_x}, {displacement_y})"
+            cv2.putText(cv_image, displacement_text, (x, y - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 2)
 
             text_label = f"Detected: {highest_score_bb.get('label')}"
             cv2.putText(cv_image, text_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)

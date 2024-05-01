@@ -106,12 +106,39 @@ class ArmControl(Node):
                 self.working()
                 self.count += 1
             elif self.count == 75:
+                print('Pick up over')
                 self.notworking()
                 self.count = 0
                 self.act = 0
             else:
                 self.count += 1
                 self.working()
+        elif self.act == 3:
+            if self.count == 0:
+                arm_msg.data = [-1, -1, -1, -1, self.s5, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.arm_move_pub.publish(arm_msg)
+                self.working()
+                self.count += 1
+            elif self.count == 10:
+                arm_msg.data = [1000, -1, -1, -1, self.s5, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.arm_move_pub.publish(arm_msg)
+                self.working()
+                self.count += 1
+            elif self.count == 20:
+                arm_msg.data = [-1, 12000, 7000, 20000, 16000, 12000, 1000, 1000, 1000, 1000, 1000, 1000]
+                self.arm_move_pub.publish(arm_msg)
+                self.working()
+                self.count += 1
+            elif self.count == 35:
+                print('Drop off over')
+                self.notworking()
+                self.count = 0
+                self.act = 0
+            else:
+                self.count += 1
+                self.working()
+
+
         # elif self.act == 3:
         #     if self.count == 0:
         #         arm_msg.data = [-1, 12000, self.s3, self.s4, self.s5, self.s6, 1000, 1000, 1000, 1000, 1000, 1000]
