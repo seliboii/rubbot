@@ -20,7 +20,12 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'planning = planning.planning:main'
+            'planning = planning.planning:main',
+            'occupancy_grid = planning.occupancy_grid:main',
+            'generate_path = planning.generate_path:main',
+            'follower = planning.follower:main',
+            "move_to_goal_server = planning.move_to_goal_server:main",
+            "move_to_goal_client = planning.move_to_goal_client:main" 
         ],
     },
 )

@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='g5',
     maintainer_email='geraortegapeim@hotmail.com',
-    description='TODO: Package description',
+    description='Localization package',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
