@@ -21,7 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             'arm_ik = arm.arm_ik:main',
-            'arm_control = arm.arm_control:main'
+            'arm_control = arm.arm_control:main',
+            'arm_fk = arm.arm_fk:main',
+            'arm_state_machine = arm.arm_state_machine:main'
         ],
     },
 )
