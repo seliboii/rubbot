@@ -25,7 +25,9 @@ setup(
             'cartesian_carl = controller.cartesian_carl:main',
             'wall_following_controller = controller.wall_following_controller:main',
             'milestone1_goal = controller.milestone1_goal:main',
-            'cartesian_axel = controller.cartesian_axel:main'
+            'cartesian_axel = controller.cartesian_axel:main',
+            'bt_proj = controller.bt_proj:main',
+            'test_sm = controller.test_sm:main'
         ],
     },
 )
