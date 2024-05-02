@@ -30,8 +30,7 @@ class StateMachine(Node):
                 self.get_logger().info('In init state')
                 self.state = 'rotate'
             case 'rotate':
-                self.twist.angular.z = 0.1
-                self.cnt = 0
+                self.twist.angular.z = 1.5
                 if self.cnt < 10:
                     self.twist_pub.publish(self.twist)
                     self.cnt += 1
