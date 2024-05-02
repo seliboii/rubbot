@@ -12,6 +12,7 @@ from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
 from geometry_msgs.msg import TransformStamped
 from robp_interfaces.msg import Encoders
+from sensor_msgs.msg import Imu
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 
@@ -25,18 +26,36 @@ class Odometry(Node):
         self._tf_broadcaster = TransformBroadcaster(self)
 
         # Initialize the path publisher
-        self._path_pub = self.create_publisher(Path, 'path', 10)
+        self._path_pub = self.create_publisher(Path, 'path',10)
         # Store the path here
         self._path = Path()
 
         # Subscribe to encoder topic and call callback function on each recieved message
         self.create_subscription(
             Encoders, '/motor/encoders', self.encoder_callback, 10)
+        # Imu subscriber to determine rotational velocity
+        self.create_subscription(
+            Imu, '/imu/data_raw', self.imu_cb, 10
+        )
+
+        # test to see how big the angular velocities are when robot is still
+        # angular velocitites maxed out at 0.01 when still, 0.02 when shaking
+        # self.maxw = 0
+
 
         # 2D pose
         self._x = 0.0
         self._y = 0.0
         self._yaw = 0.0
+        self.imu_yaw_speed  = 0.0
+
+    def imu_cb(self, msg: Imu):
+        self.imu_yaw_speed = msg.angular_velocity.z
+        if abs(self.imu_yaw_speed) > 0.05:
+            self._yaw = self._yaw - self.imu_yaw_speed * (1/250)
+
+
+
 
     def encoder_callback(self, msg: Encoders):
         """Takes encoder readings and updates the odometry.
@@ -68,7 +87,9 @@ class Odometry(Node):
 
         self._x = self._x + D *math.cos(self._yaw) # TODO: Fill in
         self._y = self._y + D*math.sin(self._yaw) # TODO: Fill in
-        self._yaw = self._yaw + delta_theta # TODO: Fill in
+        if abs(self.imu_yaw_speed) < 0.05:
+            self._yaw = self._yaw + delta_theta # TODO: Fill in
+
         
         stamp = msg.header.stamp # TODO: Fill in
 
@@ -137,6 +158,7 @@ class Odometry(Node):
         pose.pose.orientation.y = q[1]
         pose.pose.orientation.z = q[2]
         pose.pose.orientation.w = q[3]
+        self._path.poses.clear()
 
         self._path.poses.append(pose)
 

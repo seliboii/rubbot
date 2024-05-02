@@ -42,7 +42,7 @@ class DisplayMarkers(Node):
                 self.get_logger().info("kuken")
 
             except:
-                #self.get_logger().info("kuken")
+                self.get_logger().info("kuken")
                 return
             map_pose = tf2_geometry_msgs.do_transform_pose(msg.markers[0].pose.pose, t)
             t.transform.translation.x = map_pose.position.x

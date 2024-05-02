@@ -50,9 +50,11 @@ qtcreator-*
 **.bash
 **.ssh
 **.zip
+**.json
 # Emacs
 .#*
 
 # Catkin custom files
 CATKIN_IGNORE
 
+/__pycache__

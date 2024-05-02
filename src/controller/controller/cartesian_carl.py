@@ -12,7 +12,7 @@ class CartesianController(Node):
 
     def __init__(self):
         super().__init__('cartesian_controller')
-        self.velocity = self.create_subscription(Twist,'/motor_controller/twist',self.velocity_callback,10)
+        self.velocity = self.create_subscription(Twist,'/motor_controller/twist',self.velocity_callback,1)
         self.encoder = self.create_subscription(Encoders,'/motor/encoders',self.encoder_callback,10)
         self.duty_cycles_ = self.create_publisher(DutyCycles,'/motor/duty_cycles',10) 
         timer_period = 0.1
@@ -74,15 +74,19 @@ class CartesianController(Node):
         pwm_right = alpha_right*right_error+beta_right*self.int_error_right
 
         msg = DutyCycles()
-        if pwm_left > 0.3:
-            pwm_left = 0.3
-        elif pwm_left < -0.3:
-            pwm_left = -0.3
+        if pwm_left > 1.0:
+            print("left saturated")
+            pwm_left = 1.0
+        elif pwm_left < -1.0:
+            print("left saturated")
+            pwm_left = -1.0
 
-        if pwm_right > 0.3:
-            pwm_right = 0.3
-        elif pwm_right < -0.3:
-            pwm_right = -0.3
+        if pwm_right > 1.0:
+            print("right saturated")
+            pwm_right = 1.0
+        elif pwm_right < -1.0:
+            print("right saturated")
+            pwm_right = -1.0
 
         if self.linear == 0 and self.angular == 0:
             pwm_right = 0.0
