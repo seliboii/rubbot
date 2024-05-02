@@ -28,7 +28,7 @@ class StateMachine(Node):
         match self.state:
             case 'init':
                 self.get_logger().info('In init state')
-                self.state = 'go2goal'
+                self.state = 'rotate'
             case 'rotate':
                 self.twist.angular.z = 0.1
                 self.cnt = 0
