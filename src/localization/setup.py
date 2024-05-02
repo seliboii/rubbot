@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'update = localization.update:main'
+            'update = localization.update:main',
+            'mapping = localization.mapping:main'
         ],
     },
 )
