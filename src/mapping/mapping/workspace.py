@@ -19,9 +19,9 @@ class Workspace(Node):
         self.pub = self.create_publisher(OccupancyGrid, '/occupancy_grid', 1)
         #self.obstacle_sub = self.create_subscription(PoseStamped, '/object_og', self.add_obstacle_callback,1)
         self.update_pub = self.create_publisher(OccupancyGridUpdate, 'occupancy_grid_updates',1)
-        #self._path_sub = self.create_subscription(Path, 'path',self.path_callback, 1,callback_group=cbg)
+        self._path_sub = self.create_subscription(Path, 'path',self.path_callback, 1,callback_group=cbg)
         self.sample_period = 1
-        #self.timer = self.create_timer(self.sample_period, self.add_obstacle_callback,callback_group=cbg)
+        self.timer = self.create_timer(self.sample_period, self.add_obstacle_callback,callback_group=cbg)
 
         self.start_y = 0
         self.start_x = 0
@@ -82,7 +82,7 @@ class Workspace(Node):
         for j, y in enumerate(y_coordinates):
             for i, x in enumerate(x_coordinates):
                 if point_inside_polygon(x, y, polygon):
-                    data.append(0)
+                    data.append(-1)
                 else:
                     data.append(100)
 
@@ -93,40 +93,40 @@ class Workspace(Node):
         self.pub.publish(Grid)
         print('HERE')
 
-    # def path_callback(self, msg: Path):
-    #     latestPose = msg.poses[-1]
-    #     self.odom_x = latestPose.pose.position.x
-    #     self.odom_y = latestPose.pose.position.y
-    #     self.start_y = int((self.odom_x+4)/self.res)
-    #     self.start_x = int((self.odom_y+2)/self.res)
-    #     x = latestPose.pose.orientation.x
-    #     y = latestPose.pose.orientation.y
-    #     z = latestPose.pose.orientation.z
-    #     w = latestPose.pose.orientation.w
-    #     q = euler_from_quaternion([x,y,z,w])
-    #     self.odom_theta = q[2]
-    #     self.stamp = msg.header.stamp
+    def path_callback(self, msg: Path):
+        latestPose = msg.poses[-1]
+        self.odom_x = latestPose.pose.position.x
+        self.odom_y = latestPose.pose.position.y
+        self.start_x = int((self.odom_x+4)/self.res)
+        self.start_y = int((self.odom_y+2)/self.res)
+        x = latestPose.pose.orientation.x
+        y = latestPose.pose.orientation.y
+        z = latestPose.pose.orientation.z
+        w = latestPose.pose.orientation.w
+        q = euler_from_quaternion([x,y,z,w])
+        self.odom_theta = q[2]
+        self.stamp = msg.header.stamp
 
 
-    # def add_obstacle_callback(self):
-    #     Grid = self.grid
-    #     dataMatrix = np.reshape(Grid.data,(Grid.info.height,Grid.info.width))
+    def add_obstacle_callback(self):
+        Grid = self.grid
+        dataMatrix = np.reshape(Grid.data,(Grid.info.height,Grid.info.width))
 
-    #     max_lenght = 150
-    #     camera_span = math.pi/8
-    #     iterations = 200
-    #     for i in range(iterations):
-    #         end_x = int(math.cos(self.odom_theta+math.pi/2-camera_span+camera_span*2*i/iterations)*max_lenght+self.start_x)
-    #         end_y = int(math.sin(self.odom_theta+math.pi/2-camera_span+camera_span*2*i/iterations)*max_lenght+self.start_y)
-    #         traversed = raytrace([self.start_x, self.start_y],[end_x, end_y])
-    #         for point in traversed:
-    #             if dataMatrix[point[0],point[1]] != 100:
-    #                 dataMatrix[point[0],point[1]] = 0
-    #     Grid.data = dataMatrix.reshape(-1,).tolist()
+        max_lenght = 150
+        camera_span = math.pi/8
+        iterations = 200
+        for i in range(iterations):
+            end_y = int(math.cos(self.odom_theta+math.pi/2-camera_span+camera_span*2*i/iterations)*max_lenght+self.start_x)
+            end_x = int(math.sin(self.odom_theta+math.pi/2-camera_span+camera_span*2*i/iterations)*max_lenght+self.start_y)
+            traversed = raytrace([self.start_x, self.start_y],[end_x, end_y])
+            for point in traversed:
+                if dataMatrix[point[0],point[1]] != 100:
+                    dataMatrix[point[0],point[1]] = 0
+        Grid.data = dataMatrix.reshape(-1,).tolist()
 
        
-    #     self.pub.publish(Grid)
-    #     print("PUBLISHING NEW LIST")
+        self.pub.publish(Grid)
+        print("PUBLISHING NEW LIST")
 
 
 
@@ -186,7 +186,7 @@ def point_inside_polygon(x, y, poly):
 def main():
     rclpy.init()
     node = Workspace()
-    rclpy.spin_once(node,executor=MultiThreadedExecutor(2))
+    rclpy.spin(node,executor=MultiThreadedExecutor(2))
     
     # try:
     #     rclpy.spin_once(node,executor=MultiThreadedExecutor(2), timeout_sec=20)
