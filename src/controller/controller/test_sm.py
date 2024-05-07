@@ -37,6 +37,8 @@ class StateMachine(Node):
         # self.goal_reached = GoalReached()
         self.goal_reached = False
 
+        self.first_iter =True
+
 
     def sm_cb(self):
         match self.state:
@@ -54,8 +56,9 @@ class StateMachine(Node):
                 self.twist_pub.publish(self.twist)
                 self.state = 'send2goal'
             case 'send2goal':
-
-                self.goalpub.publish(self.goalpose)
+                if self.first_iter:
+                    self.goalpub.publish(self.goalpose)
+                    self.first_iter = False
                 if self.goal_reached:
                     self.state = 'escape'
                 else:

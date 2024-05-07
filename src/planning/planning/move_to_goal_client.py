@@ -52,7 +52,9 @@ class MoveToGoalClientNode(Node):
     def goal_result_callback(self, future): #Return the result
         result = future.result().result
         self.get_logger().info("Result: "+str(result.reached_goal))
-        self.msg_pub.publish(result.reached_goal)
+        result_msg = GoalReached()
+        result_msg.goal_reached = result.reached_goal
+        self.msg_pub.publish(result_msg)
             
 
 
