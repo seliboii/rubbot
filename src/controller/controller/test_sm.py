@@ -4,6 +4,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Twist
 import rclpy.waitable
+from rubbot_interfaces.msg import GoalReached
 
 
 class StateMachine(Node):
@@ -18,11 +19,10 @@ class StateMachine(Node):
             '/motor_controller/twist',
             1
         )
-        self.goal_reached = False
         self.goalpose = PoseStamped()
         # test goalpose
-        self.goalpose.pose.position.x = 2
-        self.goalpose.pose.position.y = 2
+        self.goalpose.pose.position.x = -1.0
+        self.goalpose.pose.position.y = 3.0
         self.twist = Twist()
         self.cnt = 0
         # self.goalpose.pose.position.x = 5
@@ -33,6 +33,10 @@ class StateMachine(Node):
             '/move_base/goal',
             1
         )
+        self.create_subscription(GoalReached, '/goal/status', self.goal_cb, 1)
+        # self.goal_reached = GoalReached()
+        self.goal_reached = False
+
 
     def sm_cb(self):
         match self.state:
@@ -46,16 +50,23 @@ class StateMachine(Node):
                     self.cnt += 1
                     return
                     
-                self.twist.angular.z = 0
+                self.twist.angular.z = 0.0
                 self.twist_pub.publish(self.twist)
                 self.state = 'send2goal'
             case 'send2goal':
+
                 self.goalpub.publish(self.goalpose)
-                self.state = 'ass'
+                if self.goal_reached:
+                    self.state = 'escape'
+                else:
+                    print("guh")
+
             case _:
                 self.get_logger().info('In default state')
 
-
+    def goal_cb(self, msg):
+        self.goal_reached = msg
+    
 def main():
     rclpy.init()
     node = StateMachine()

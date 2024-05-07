@@ -5,6 +5,7 @@ from rclpy.action import ActionClient
 from rclpy.action.server import ServerGoalHandle
 from rclpy.action.client import ClientGoalHandle
 from rubbot_interfaces.action import MoveToGoal
+from rubbot_interfaces.msg import GoalReached
 from geometry_msgs.msg import PoseStamped
 
 class MoveToGoalClientNode(Node):
@@ -18,11 +19,10 @@ class MoveToGoalClientNode(Node):
         # self._get_goal = self.create_subscription(PoseStamped, '/move_base_simple/goal',self.goal_callback,10)
         # Subscription for general goal controller
         self._get_goal = self.create_subscription(PoseStamped, '/move_base/goal',self.goal_callback,10)
-        self.msg_pub = self.create_publisher(MoveToGoal,
-                              '/goal_message',
+        self.msg_pub = self.create_publisher(GoalReached,
+                              '/goal/status',
                               1)
         
-        self.goal_msg = MoveToGoal()
     
     def goal_callback(self,msg: PoseStamped):
         goal_x = msg.pose.position.x
@@ -52,6 +52,8 @@ class MoveToGoalClientNode(Node):
     def goal_result_callback(self, future): #Return the result
         result = future.result().result
         self.get_logger().info("Result: "+str(result.reached_goal))
+        self.msg_pub.publish(result.reached_goal)
+            
 
 
         
