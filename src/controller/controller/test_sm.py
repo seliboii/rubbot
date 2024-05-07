@@ -22,8 +22,8 @@ class StateMachine(Node):
         )
         self.goalpose = PoseStamped()
         # test goalpose
-        self.goalpose.pose.position.x = -1.0
-        self.goalpose.pose.position.y = 3.0
+        self.goalpose.pose.position.x = 1.0
+        self.goalpose.pose.position.y = 1.0
         self.twist = Twist()
         self.cnt = 0
         # self.goalpose.pose.position.x = 5
@@ -76,6 +76,8 @@ class StateMachine(Node):
             case 'pick':
                 if self.first_iter:
                     self.arm_string.data = 'pick'
+                    self.arm_pub.publish(self.arm_string)
+                    self.arm_pub.publish(self.arm_string)
                     self.arm_pub.publish(self.arm_string)
                     self.first_iter = False
                 else:

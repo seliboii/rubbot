@@ -258,7 +258,7 @@ def randomNode(h,w,data,nodes,MAX_EDGE_LEN):
     traversed = raytrace(start,end)
     for point in traversed:
         #print("point1: ",point[1],"  point0: ",point[0])
-        if data[point[1]][point[0]] != 0:
+        if data[point[1]][point[0]] == 100: ##HEHEHHEHEHEHEHHEHEHEHEHEH !=0
             return False
 
     new_node = NodePoint(rx,ry)
@@ -314,7 +314,7 @@ def shortCut(node,goal_node,data):
     end = [node.x,node.y]
     traversed = raytrace(start,end)
     for point in traversed:
-        if data[point[1]][point[0]] != 0:
+        if data[point[1]][point[0]] == 100: ############HEHEHHEHEHEHHEHEHEHEHEH !=0
             return False
     return True
 
@@ -370,7 +370,7 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly):
         new_node = randomNode(h,w,data,nodes,max_edge_dist)
         if new_node != False:
             nodes.append(new_node)
-            print(iter)
+            
            
 
             if shortCut(new_node,goal_node,data) == True:

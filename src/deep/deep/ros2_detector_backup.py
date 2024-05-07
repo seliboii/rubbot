@@ -18,12 +18,14 @@ from map_msgs.msg import OccupancyGridUpdate
 from sensor_msgs.msg import PointField
 
 from .detector4 import Detector
+from .detector5 import Detector_
 
 class Ros2Detector(Node):
     def __init__(self):
         super().__init__('ros2_detector')
 
         self.detector = Detector()  # Assuming 10 categories for example
+        self.detector2 = Detector_()  # Assuming 10 categories for example
         self.load_model()
         self.bridge = CvBridge()
 
@@ -31,7 +33,7 @@ class Ros2Detector(Node):
         self.publisher_gripcam = self.create_publisher(Image, 'dl_gripcam', 10)
         self.publisher_gripper_angle = self.create_publisher(Float64,'gripper_angle',10)
         self.publisher_gripper_position = self.create_publisher(Point,'gripper_position',10)
-        self.publisher_pose = self.create_publisher(PoseStamped, '/move_base_simple/goal', 10)  
+        self.publisher_pose = self.create_publisher(PoseStamped, '/object_og', 10)  
 
         self.subscription = self.create_subscription(Image,'/image_rect',self.image_callback,10)
         self.subscription2 = self.create_subscription(Image,'/camera/color/image_raw',self.image_callback2,10)
@@ -97,6 +99,25 @@ class Ros2Detector(Node):
         depth = self.depth_image[y_int, x_int]
         return depth
     
+    # def get_pointcloud_at_point(self, x, y):
+    #     if self.depth_image is None or self.depth_info is None:
+    #         return None
+    #     fx = self.depth_info.k[0]  # Focal length in x direction
+    #     fy = self.depth_info.k[4]  # Focal length in y direction
+    #     cx = self.depth_info.k[2]  # Principal point in x direction
+    #     cy = self.depth_info.k[5]  # Principal point in y direction
+        
+    #     center_x = int(round(x))
+    #     center_y = int(round(y))
+        
+    #     depth = self.depth_image[center_y, center_x]
+    #     if depth == 0:
+    #         return None
+    #     z = float(depth)
+    #     x = (center_x - cx) * depth / fx
+    #     y = (center_y - cy) * depth / fy
+    #     return x, y, z  
+
     def get_pointcloud_at_point(self, x, y):
         if self.depth_image is None or self.depth_info is None:
             return None
@@ -105,8 +126,10 @@ class Ros2Detector(Node):
         cx = self.depth_info.k[2]  # Principal point in x direction
         cy = self.depth_info.k[5]  # Principal point in y direction
         
-        center_x = int(round(x))
-        center_y = int(round(y))
+        height, width = self.depth_image.shape[:2]  # Get height and width of the depth image
+        
+        center_x = int(round(max(0, min(x, width - 1))))  # Clamp center_x to valid range
+        center_y = int(round(max(0, min(y, height - 1))))  # Clamp center_y to valid range
         
         depth = self.depth_image[center_y, center_x]
         if depth == 0:
@@ -134,12 +157,17 @@ class Ros2Detector(Node):
         tensor_frame = torch.tensor(cv_image, dtype=torch.float32).permute(2, 0, 1) / 255.0
         tensor_frame = tensor_frame.unsqueeze(0)
         output = self.detector(tensor_frame)
-        bbs = self.detector.out_to_bbs(output)
+        bbs = self.detector2.out_to_bbs(output)
 
         if bbs and bbs[0]:
             highest_score_bb = max(bbs[0], key=lambda x: x['score'])  
             x, y, width, height = highest_score_bb['x'], highest_score_bb['y'], highest_score_bb['width'], highest_score_bb['height']
             x, y, width, height = int(x), int(y), int(width), int(height)  
+            x = max(0, x)
+            y = max(0, y)
+            width = min(width, cv_image.shape[1] - x)
+            height = min(height, cv_image.shape[0] - y)
+
             x2, y2 = x + width, y + height
 
             bb_center_x = (x + x2) // 2
@@ -150,20 +178,20 @@ class Ros2Detector(Node):
             gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
             edges = cv2.Canny(gray_roi, 100, 150)  
                     
-            moments = cv2.moments(edges)
-            mu20 = moments['mu20']
-            mu11 = moments['mu11']
-            mu02 = moments['mu02']
-            theta = 0.5 * np.arctan2(2 * mu11, (mu20 - mu02 + np.sqrt(4 * mu11**2 + (mu20 - mu02)**2)))
+            #moments = cv2.moments(edges)
+            #mu20 = moments['mu20']
+            #mu11 = moments['mu11']
+            #mu02 = moments['mu02']
+            #theta = 0.5 * np.arctan2(2 * mu11, (mu20 - mu02 + np.sqrt(4 * mu11**2 + (mu20 - mu02)**2)))
                     
-            theta_degrees = np.degrees(theta)
+            #theta_degrees = np.degrees(theta)
 
-            turning_angle = theta_degrees  
+            #turning_angle = theta_degrees  
 
-            if turning_angle > 10:
-                angle_msg = Float64()
-                angle_msg.data = 90 -(turning_angle)
-                self.publisher_gripper_angle.publish(angle_msg)
+            #if turning_angle > 10:
+            #    angle_msg = Float64()
+            #    angle_msg.data = 90 -(turning_angle)
+            #    self.publisher_gripper_angle.publish(angle_msg)
 
             img_center_x = cv_image.shape[1] // 2
             img_center_y = cv_image.shape[0] // 2
@@ -181,11 +209,12 @@ class Ros2Detector(Node):
 
             self.publisher_gripper_position.publish(center_position)
 
-            displacement_text = f"Displacement: ({displacement_x}, {displacement_y})"
-            cv2.putText(cv_image, displacement_text, (x, y - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 2)
+            #displacement_text = f"Displacement: ({displacement_x}, {displacement_y})"
+            #cv2.putText(cv_image, displacement_text, (x, y - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 2)
 
-            text_label = f"Detected: {highest_score_bb.get('label')}"
+            text_label = f"{highest_score_bb.get('label')}"
             cv2.putText(cv_image, text_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            print(highest_score_bb.get('label'))
 
             cv2.rectangle(cv_image, (x, y), (x2, y2), (0, 255, 0), 2)
                     
@@ -215,6 +244,13 @@ class Ros2Detector(Node):
 
         for bb in resized_bbs:
             x, y, width, height = bb['x'], bb['y'], bb['width'], bb['height']
+
+            # Ensure bounding box stays within image boundaries
+            x = max(0, x)
+            y = max(0, y)
+            width = min(width, cv_image.shape[1] - x)
+            height = min(height, cv_image.shape[0] - y)
+
             center_x = x + width / 2 
             center_y = y + height / 2 
 
@@ -224,12 +260,10 @@ class Ros2Detector(Node):
             final_x, final_y, depth = pointcloud_point
 
             # Iterate through all points inside the bounding box
-            for px in range(x, x + width):
-                for py in range(y, y + height):
-                    pointcloud_point = 1 #self.get_pointcloud_at_point(px, py)
+            for px in range(int(x), int(x + width)):
+                for py in range(int(y), int(y + height)):
+                    pointcloud_point = self.get_pointcloud_at_point(px, py)
                     if pointcloud_point is not None:
-                        #x1,y1, depth = pointcloud_point  # Extract depth from the point
-                        #depth_values.append(depth)  # Append depth to the list
                         depth_values.append(pointcloud_point)
 
             depth_values = [100] * len(depth_values)
@@ -264,28 +298,29 @@ class Ros2Detector(Node):
             #transfrom from camera_link to map frame
 
 
-            if depth_values and width2 and height2:
-                # Create an occupancy grid update message
-                occupancy_grid_update_msg = OccupancyGridUpdate()
-                occupancy_grid_update_msg.header.stamp = self.get_clock().now().to_msg()
-                occupancy_grid_update_msg.header.frame_id = 'camera_link'
-                occupancy_grid_update_msg.x = int(4/(res))+int((z2)/(res*1000))  # The x-coordinate of the bounding box
-                occupancy_grid_update_msg.y = int(2/(res))-int((x2)/(res*1000)) # The y-coordinate of the bounding box
-                occupancy_grid_update_msg.width = int(15) #int(4/res)+int(width2/res*1000) #int(15)  # The width of the bounding box
-                occupancy_grid_update_msg.height = int(25)#int(2/res)-int(height2/res*1000) #int(15)  # The height of the bounding box
-                occupancy_grid_update_msg.data = depth_values  # Depth values
+            # if depth_values and width2 and height2:
+            #     # Create an occupancy grid update message
+            #     occupancy_grid_update_msg = OccupancyGridUpdate()
+            #     occupancy_grid_update_msg.header.stamp = self.get_clock().now().to_msg()
+            #     occupancy_grid_update_msg.header.frame_id = 'camera_link'
+            #     occupancy_grid_update_msg.x = int(4/(res))+int((z2)/(res*1000))  # The x-coordinate of the bounding box
+            #     occupancy_grid_update_msg.y = int(2/(res))-int((x2)/(res*1000)) # The y-coordinate of the bounding box
+            #     occupancy_grid_update_msg.width = int(15) #int(4/res)+int(width2/res*1000) #int(15)  # The width of the bounding box
+            #     occupancy_grid_update_msg.height = int(25)#int(2/res)-int(height2/res*1000) #int(15)  # The height of the bounding box
+            #     occupancy_grid_update_msg.data = depth_values  # Depth values
                 
-                print(occupancy_grid_update_msg.x)
-                print(occupancy_grid_update_msg.y)
-                # Publish the occupancy grid update message
-                self.publisher_occupancy_grid_update.publish(occupancy_grid_update_msg)
+            #     print(occupancy_grid_update_msg.x)
+            #     print(occupancy_grid_update_msg.y)
+            #     # Publish the occupancy grid update message
+            #     self.publisher_occupancy_grid_update.publish(occupancy_grid_update_msg)
 
 
             pose_msg = PoseStamped()
             pose_msg.header.stamp = self.get_clock().now().to_msg() 
             pose_msg.header.frame_id = 'camera_link'
             pose_msg.pose.position.y = -final_x / 1000
-            pose_msg.pose.position.z = -final_y / 1000
+            # pose_msg.pose.position.z = -final_y / 1000
+            pose_msg.pose.position.z = width / 1000
             pose_msg.pose.position.x = depth / 1000
             poses.append(pose_msg)  
 
@@ -330,7 +365,7 @@ class Ros2Detector(Node):
                 self.detected_poses[label] = []
             self.detected_poses[label].append(pose_msg)
             
-            print("Detected Poses:")
+            #print("Detected Poses:")
             for label, poses_list in self.detected_poses.items():
                 print(f"Label: {label}")
                 print("Poses:")
@@ -344,6 +379,7 @@ class Ros2Detector(Node):
 
         for pose in poses:
             self.publisher_pose.publish(pose)
+            #print(pose)
 
 def main(args=None):
     rclpy.init(args=args)

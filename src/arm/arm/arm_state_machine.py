@@ -157,7 +157,7 @@ class ARM_SM(Node):
         self.fb_s3 = msg.position[2]
         self.fb_s4 = msg.position[3]
         self.fb_s5 = msg.position[4]
-        self.fb_s6 = msg.position[5]
+        #self.fb_s6 = msg.position[5]
 
     
     def state_machine_callback(self):
@@ -172,9 +172,9 @@ class ARM_SM(Node):
                 self.point_stack_x = 0.0
                 self.point_stack_y = 0.0
             elif self.state == 1: #calculate the object position with foward kinematic
-                if self.point_count >= 5:
+                if self.point_count >= 7:
                     armcam_obj_pos = Float32MultiArray()
-                    armcam_obj_pos.data = [1.0, self.point_stack_x / self.point_count, self.point_stack_y / self.point_count]
+                    armcam_obj_pos.data = [1.0, self.point_stack_x / (self.point_count - 3.0), self.point_stack_y / (self.point_count - 3.0)]
                     print('Obj Position in Camera: ', armcam_obj_pos.data)
                     self.fk_pub.publish(armcam_obj_pos)
                     self.state = 2
@@ -264,7 +264,10 @@ class ARM_SM(Node):
                         self.point_stack_x += msg.x
                         self.point_stack_y += msg.y
             
-        elif self.point_count < 5.0 and self.state == 1:
+        elif self.point_count < 8.0 and self.state == 1:
+            if self.point_count == 3.0:
+                self.point_stack_x = 0
+                self.point_stack_y = 0
             if self.previous_point_x != msg.x:
                 self.previous_point_x = msg.x
                 self.previous_point_y = msg.y

@@ -39,12 +39,12 @@ class remote_controller(Node):
         self.command_velocity.linear.x = linear
 
         self.dutycycles_pub.publish(self.command_velocity)
-        print("Axis 0: ", msg.axes[0])
-        print("Axis 1: ", msg.axes[1])
-        print("Axis 2: ", msg.axes[2])
-        print("Axis 3: ", msg.axes[3])
-        print("Axis 4: ", msg.axes[4])
-        print("Axis 5: ", msg.axes[5])
+        # print("Axis 0: ", msg.axes[0])
+        # print("Axis 1: ", msg.axes[1])
+        # print("Axis 2: ", msg.axes[2])
+        # print("Axis 3: ", msg.axes[3])
+        # print("Axis 4: ", msg.axes[4])
+        # print("Axis 5: ", msg.axes[5])
         # self.left = (foward - backward) * 0.25 - turn * 0.25
         # self.right = (foward - backward) * 0.25 + turn * 0.25
         

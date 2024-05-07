@@ -69,7 +69,7 @@ def calculate_iou(bbox1, bbox2):
     return iou
 
 
-class Detector(nn.Module):
+class Detector_(nn.Module):
     """Baseline module for object detection."""
 
     def __init__(self,threshold=0.9) -> None:
@@ -77,7 +77,7 @@ class Detector(nn.Module):
 
         Define all trainable layers.
         """
-        super(Detector, self).__init__()
+        super(Detector_, self).__init__()
 
         self.features = models.mobilenet_v2(pretrained=True).features
         # output of mobilenet_v2 will be 1280x15x20 for 480x640 input images
@@ -133,7 +133,7 @@ class Detector(nn.Module):
         return out
 
     def out_to_bbs(
-        self, out: torch.Tensor, threshold: Optional[float] = 0.95, topk: int = 100
+        self, out: torch.Tensor, threshold: Optional[float] = 0.9, topk: int = 100
     ) -> List[List[BoundingBox]]:
         """Convert output to list of bounding boxes.
 
