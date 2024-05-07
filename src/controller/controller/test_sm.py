@@ -5,7 +5,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Twist
 import rclpy.waitable
 from rubbot_interfaces.msg import GoalReached
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 
 
 class StateMachine(Node):
@@ -19,6 +19,17 @@ class StateMachine(Node):
             Twist,
             '/motor_controller/twist',
             1
+        )
+        self.arm_feedback = self.create_subscription(
+            Bool,
+            '/state_machine/arm',
+            self.arm_feedback_callback,
+            10
+        )
+        self.arm_feedback_update = self.create_publisher(
+            Bool,
+            '/state_machine/arm',
+            10
         )
         self.goalpose = PoseStamped()
         # test goalpose
@@ -77,7 +88,6 @@ class StateMachine(Node):
                 if self.first_iter:
                     self.arm_string.data = 'pick'
                     self.arm_pub.publish(self.arm_string)
-                    self.first_iter = False
                 else:
                     print("puh")
             case _:
@@ -85,6 +95,15 @@ class StateMachine(Node):
 
     def goal_cb(self, msg):
         self.goal_reached = msg
+
+    def arm_feedback_callback(self, msg):
+        if msg.data:
+            self.first_iter = False
+            arm_sm_update = Bool()
+            arm_sm_update = False
+            self.arm_feedback_update.publish(arm_sm_update)
+
+
     
 def main():
     rclpy.init()
