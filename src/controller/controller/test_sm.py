@@ -5,6 +5,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Twist
 import rclpy.waitable
 from rubbot_interfaces.msg import GoalReached
+from std_msgs.msg import String
 
 
 class StateMachine(Node):
@@ -39,6 +40,13 @@ class StateMachine(Node):
 
         self.first_iter =True
 
+        # publish arm actions
+        self.arm_pub = self.create_publisher(
+            String,
+            '/arm/state_machine',
+            1
+        )
+        self.arm_string = String()
 
     def sm_cb(self):
         match self.state:
@@ -60,10 +68,18 @@ class StateMachine(Node):
                     self.goalpub.publish(self.goalpose)
                     self.first_iter = False
                 if self.goal_reached:
-                    self.state = 'escape'
+                    self.state = 'pick'
+                    self.first_iter = True
                 else:
                     print("guh")
-
+            
+            case 'pick':
+                if self.first_iter:
+                    self.arm_string.data = 'pick'
+                    self.arm_pub.publish(self.arm_string)
+                    self.first_iter = False
+                else:
+                    print("puh")
             case _:
                 self.get_logger().info('In default state')
 
