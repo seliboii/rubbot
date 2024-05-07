@@ -20,9 +20,19 @@ class StateMachine(Node):
         )
         self.goal_reached = False
         self.goalpose = PoseStamped()
+        # test goalpose
+        self.goalpose.pose.position.x = 2
+        self.goalpose.pose.position.y = 2
         self.twist = Twist()
         self.cnt = 0
         # self.goalpose.pose.position.x = 5
+
+        # Publisher for goal
+        self.goalpub = self.create_publisher(
+            PoseStamped,
+            '/move_base/goal',
+            1
+        )
 
     def sm_cb(self):
         match self.state:
@@ -38,7 +48,10 @@ class StateMachine(Node):
                     
                 self.twist.angular.z = 0
                 self.twist_pub.publish(self.twist)
-                self.state = 'next_state'
+                self.state = 'send2goal'
+            case 'send2goal':
+                self.goalpub.publish(self.goalpose)
+                self.state = 'ass'
             case _:
                 self.get_logger().info('In default state')
 

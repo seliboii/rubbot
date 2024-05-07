@@ -14,8 +14,15 @@ class MoveToGoalClientNode(Node):
             self,
             MoveToGoal,
             "move_to_goal")
+        # Subscription for rviz goal controller
+        # self._get_goal = self.create_subscription(PoseStamped, '/move_base_simple/goal',self.goal_callback,10)
+        # Subscription for general goal controller
+        self._get_goal = self.create_subscription(PoseStamped, '/move_base/goal',self.goal_callback,10)
+        self.msg_pub = self.create_publisher(MoveToGoal,
+                              '/goal_message',
+                              1)
         
-        self._get_goal = self.create_subscription(PoseStamped, '/move_base_simple/goal',self.goal_callback,10)
+        self.goal_msg = MoveToGoal()
     
     def goal_callback(self,msg: PoseStamped):
         goal_x = msg.pose.position.x
