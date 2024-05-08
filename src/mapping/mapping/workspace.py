@@ -95,7 +95,7 @@ class Workspace(Node):
         for j, y in enumerate(y_coordinates):
             for i, x in enumerate(x_coordinates):
                 if point_inside_polygon(x, y, polygon):
-                    data.append(0)
+                    data.append(-1)
                 else:
                     data.append(100)
 
