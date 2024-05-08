@@ -173,6 +173,13 @@ class Workspace(Node):
                     for ob_point in ob_traversed:
                         try:
                             dataMatrix[ob_point[1]][ob_point[0]] = 100
+                            for i in range(5):
+                                y = i + ob_point[1] - 2
+                                for j in range(5):
+                                    x = j + ob_point[0] - 2
+
+                                    if dataMatrix[ob_point[1]][ob_point[0]] != 100:
+                                        dataMatrix[ob_point[1]][ob_point[0]] = -128
                         except:
                             return
             
