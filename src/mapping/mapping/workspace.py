@@ -178,8 +178,8 @@ class Workspace(Node):
                                 for j in range(5):
                                     x = j + ob_point[0] - 2
 
-                                    if dataMatrix[ob_point[1]][ob_point[0]] != 100:
-                                        dataMatrix[ob_point[1]][ob_point[0]] = -128
+                                    if dataMatrix[y][x] != 100:
+                                        dataMatrix[y][x] = -128
                         except:
                             return
             
