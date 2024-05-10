@@ -14,6 +14,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros import TransformException
 from tf2_ros.transform_listener import TransformListener
 import tf2_geometry_msgs
+from robp_interfaces.msg import Information
 
 
 class Workspace(Node):
@@ -22,10 +23,10 @@ class Workspace(Node):
 
         cbg = ReentrantCallbackGroup()
         self.pub = self.create_publisher(OccupancyGrid, '/occupancy_grid', 1)
-        self.obstacle_sub = self.create_subscription(PoseStamped, '/object_og', self.detected_object_callback,1,callback_group=cbg)
+        self.obstacle_sub = self.create_subscription(Information, '/object_og', self.detected_object_callback,1,callback_group=cbg)
         self.update_pub = self.create_publisher(OccupancyGridUpdate, 'occupancy_grid_updates',1)
         self._path_sub = self.create_subscription(Path, 'path',self.path_callback, 1,callback_group=cbg)
-        self.sample_period = 0.5
+        self.sample_period = 1
         self.timer = self.create_timer(self.sample_period, self.add_obstacle_callback,callback_group=cbg)
 
         self.tf_buffer = Buffer()
@@ -120,9 +121,9 @@ class Workspace(Node):
         self.odom_theta = q[2]
         self.stamp = msg.header.stamp
 
-    def detected_object_callback(self, msg: PoseStamped):
+    def detected_object_callback(self, msg: Information):
 
-        self.obstacle_list.append(msg)
+        self.obstacle_list.append(msg.pose)
    
       
         
@@ -169,14 +170,14 @@ class Workspace(Node):
 
                     ob_traversed = raytrace(left_edge, right_edge)
                     #print(ob_traversed)
-
+                    cock = 20
                     for ob_point in ob_traversed:
                         try:
                             dataMatrix[ob_point[1]][ob_point[0]] = 100
-                            for i in range(5):
-                                y = i + ob_point[1] - 2
-                                for j in range(5):
-                                    x = j + ob_point[0] - 2
+                            for i in range(cock):
+                                y = i + ob_point[1] - int(cock/2)
+                                for j in range(cock):
+                                    x = j + ob_point[0] - int(cock/2)
 
                                     if dataMatrix[y][x] != 100:
                                         dataMatrix[y][x] = -128
@@ -200,14 +201,17 @@ class Workspace(Node):
             traversed = raytrace([self.start_y, self.start_x],[end_y, end_x])
             unknown = False
             for point in traversed:
-                if dataMatrix[point[0]][point[1]] != 100:
-                    if unknown:
-                        if dataMatrix[point[0]][point[1]] != 0:
-                            dataMatrix[point[0]][point[1]] = -1
+                try:
+                    if dataMatrix[point[0]][point[1]] != 100 and dataMatrix[point[0]][point[1]] != -128:
+                        if unknown:
+                            if dataMatrix[point[0]][point[1]] != 0:
+                                dataMatrix[point[0]][point[1]] = -1
+                        else:
+                            dataMatrix[point[0]][point[1]] = 0
                     else:
-                        dataMatrix[point[0]][point[1]] = 0
-                else:
-                    unknown = True
+                        unknown = True
+                except:
+                    pass
         Grid.data = dataMatrix.reshape(-1,).tolist()
         Grid.header.stamp = self.stamp
 
