@@ -7,6 +7,8 @@ from rclpy.action.client import ClientGoalHandle
 from rubbot_interfaces.action import MoveToGoal
 from rubbot_interfaces.msg import GoalReached
 from geometry_msgs.msg import PoseStamped
+from robp_interfaces.msg import Information
+from tf_transformations import quaternion_from_euler, euler_from_quaternion
 
 class MoveToGoalClientNode(Node):
     def __init__(self):
@@ -18,19 +20,28 @@ class MoveToGoalClientNode(Node):
         # Subscription for rviz goal controller
         # self._get_goal = self.create_subscription(PoseStamped, '/move_base_simple/goal',self.goal_callback,10)
         # Subscription for general goal controller
-        self._get_goal = self.create_subscription(PoseStamped, '/move_base/goal',self.goal_callback,10)
+        self._get_goal = self.create_subscription(Information, '/move_base/goal',self.goal_callback,10)
         self.msg_pub = self.create_publisher(GoalReached,
                               '/goal/status',
                               1)
         
     
-    def goal_callback(self,msg: PoseStamped):
-        goal_x = msg.pose.position.x
-        goal_y = msg.pose.position.y
-        self.send_goal(goal_x,goal_y,0.0)
+    def goal_callback(self,msg: Information):
+        goal_x = msg.pose.pose.position.x
+        goal_y = msg.pose.pose.position.y
+        e = euler_from_quaternion([
+            msg.pose.pose.orientation.x,
+            msg.pose.pose.orientation.y,
+            msg.pose.pose.orientation.z,
+            msg.pose.pose.orientation.w
+
+        ])
+        goal_theta = e[2]
+        goal_type = msg.label
+        self.send_goal(goal_x,goal_y,goal_theta,goal_type,0.0)
         
         
-    def send_goal(self,x,y,max_period):
+    def send_goal(self,x,y,theta,type,max_period):
         self.move_to_goal_client.wait_for_server()
         
         #create a goal
@@ -39,6 +50,8 @@ class MoveToGoalClientNode(Node):
         goal.x = x
         goal.y = y
         goal.max_period = max_period
+        goal.angular_z = theta
+        goal.type = type
 
         #send goal
         self.get_logger().info("Sending goal")

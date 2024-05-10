@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-        'ros2_detector = deep.ros2_detector:main'
+        'ros2_detector = deep.ros2_detector:main','ros2_detector_backup = deep.ros2_detector_backup:mains'
+
         ],
     },
 )

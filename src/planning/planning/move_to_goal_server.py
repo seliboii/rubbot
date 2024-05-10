@@ -54,6 +54,8 @@ class MoveToGoalServerNode(Node):
         self.odom_y = 0
         self.odom_theta = 0
         self.atGoal = True
+        self.finish_angle = 0
+        self.correctAngle = True
         self.get_logger().info("Done bitch")
 
     
@@ -79,11 +81,20 @@ class MoveToGoalServerNode(Node):
     
 
         if not self.atGoal:
-            vel, iter, atGoal = nodeFollow(self.waypoints,self.iter,self.odom_x,self.odom_y,self.odom_theta)
+            vel, iter, atGoal = nodeFollow(self.waypoints,self.iter,self.odom_x,self.odom_y,self.odom_theta,self.finish_angle)
             self.iter = iter
             self.atGoal = atGoal
             if vel != 0:
                 self._vel_pub.publish(vel)
+        
+        if not self.correctAngle:
+            vel, done = endRotate(self.goal_angle,self.odom_theta)
+            if done:
+                self.correctAngle = True
+            self._vel_pub.publish(vel)
+            
+            
+
 
         
 
@@ -92,6 +103,8 @@ class MoveToGoalServerNode(Node):
         self.iter = 1
         goal_x = int((goal_handle.request.x+4)/self.res)
         goal_y = int((goal_handle.request.y+2)/self.res)
+        self.goal_angle = goal_handle.request.angular_z 
+        object_type = goal_handle.request.type 
         max_period = goal_handle.request.max_period
         self.get_logger().info("Executing the goal")
 
@@ -99,7 +112,11 @@ class MoveToGoalServerNode(Node):
         feedback = MoveToGoal.Feedback()
         
         
-        path = RRT(self,self.height,self.width,self.res,self.data,self.start_x,self.start_y,goal_x,goal_y)
+        path, object_angle, temp = RRT(self,self.height,self.width,self.res,self.data,self.start_x,self.start_y,goal_x,goal_y,object_type)
+        self.get_logger().info(str(temp[0]))
+        self.get_logger().info(str(temp[1]))
+        if object_type == 'object':
+            self.goal_angle = object_angle
         if path == False:
             feedback.found_path = False
             goal_handle.publish_feedback(feedback)
@@ -112,24 +129,48 @@ class MoveToGoalServerNode(Node):
             goalPath = createPath(self,path)
             self.waypoints = goalPath.poses
             self.atGoal = False
-            while not self.atGoal:
-                time.sleep(2)
-
             
+            while not self.atGoal:
+                time.sleep(0.2)
+            
+            if object_type != "explore":
+                self.correctAngle = False
+                while not self.correctAngle:
+                    time.sleep(0.2)
+
 
             #wait for the at goal to be set to True
                 
             result.reached_goal = True
         return result
     
-        
+def endRotate(goalTheta, currentTheta):
+    done = False
+    threshold = math.pi/128
+    dutyThreshold = 0.8
+
+    vel = Twist()
+    error = goalTheta - currentTheta
+    gain = 4
+
+    vel.angular.z = error*gain
     
+    if  vel.angular.z > dutyThreshold:
+            vel.angular.z = dutyThreshold
+    elif vel.angular.z < -dutyThreshold:
+        vel.angular.z = -dutyThreshold
+    
+    
+    if abs(error) < threshold:
+        done = True
+        vel.angular.z = 0.0
+    return vel, done
     
 
 
-def nodeFollow(waypoints,iter,odom_x,odom_y,odom_theta):
+def nodeFollow(waypoints,iter,odom_x,odom_y,odom_theta, finish_angle):
     nodeThreshhold = 0.15
-    goalThreshhold = 0.10
+    goalThreshhold = 0.08
     done = False
     atGoal = False
     
@@ -177,8 +218,8 @@ def controller(gx,gy,x0,y0,odom_x,odom_y,odom_theta,done):
         L = 0.31
         R = 0.0492
 
-        wGain = 1/(sample_period*R*40)
-        vGain = L/(p*sample_period*R*10)
+        wGain = 1/(sample_period*R*80)  #40
+        vGain = L/(p*sample_period*R*20) #10
 
         vel = Twist()
         if vGain*d_g > 1.0:
@@ -188,10 +229,15 @@ def controller(gx,gy,x0,y0,odom_x,odom_y,odom_theta,done):
         else:
             vel.linear.x = vGain*d_g
         
-        if abs(theta_g-theta) > math.pi/8:
+        # if abs(theta_g-theta) > math.pi*2/3:
+        #     vel.linear.x = 0.0
+        #     vel.angular.z = 0.2 #1.0
+
+        if abs(theta_g-theta) > math.pi/16: #/8
             
             vel.linear.x = 0.0
-            vel.angular.z = vel.angular.z*1.5
+            vel.angular.z = vel.angular.z #*1.5
+        
         
         vel.angular.z = wGain*d_p
         #self._vel_pub.publish(vel)
@@ -314,7 +360,7 @@ def shortCut(node,goal_node,data):
     end = [node.x,node.y]
     traversed = raytrace(start,end)
     for point in traversed:
-        if data[point[1]][point[0]] == 100: ############HEHEHHEHEHEHHEHEHEHEHEH !=0
+        if data[point[1]][point[0]] != 0: ############HEHEHHEHEHEHHEHEHEHEHEH !=0
             return False
     return True
 
@@ -346,15 +392,22 @@ def LCHF(node,data):
     LCHF(tempNode,data)
     return        
 
-def RRT(self,h,w,res,data,startx,starty,goalx,goaly):
+def RRT(self,h,w,res,data,startx,starty,goalx,goaly,object_type):
     max_edge_dist = 15 #Maximum distance between nodes
     max_goal_dist = 5  #Maximum goal distance
+    max_object_dist = 30
     iter = 0
-    maxIter = 5000
+    maxIter = 5000 #20000
+    angle_2_goal = 0
 
     goalPath = []
     nodes = []
 
+    if object_type == 'object':
+        angle_2_goal = math.atan2(goaly-starty,goalx-startx)
+        dist_2_goal = math.dist([starty, startx],[goaly, goalx])
+        goalx = startx + math.cos(angle_2_goal)*(dist_2_goal-max_object_dist)
+        goaly = starty + math.sin(angle_2_goal)*(dist_2_goal-max_object_dist)
 
     start_node = NodePoint(startx,starty)
     goal_node = NodePoint(goalx,goaly)
@@ -362,7 +415,7 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly):
         goal_node.parent = start_node
         goal_path = backTracker(goal_node,goalPath)
         goal_path.reverse()
-        return goal_path
+        return goal_path, angle_2_goal, [goalx, goaly]
 
 
     nodes.append(start_node)
@@ -370,9 +423,7 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly):
         new_node = randomNode(h,w,data,nodes,max_edge_dist)
         if new_node != False:
             nodes.append(new_node)
-            
            
-
             if shortCut(new_node,goal_node,data) == True:
                 
                 goal_node.parent = new_node
@@ -381,12 +432,12 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly):
                 goalPath = backTracker(goal_node,goalPath)
                 
                 goalPath.reverse()
-                return goalPath
+                return goalPath, angle_2_goal, [goalx, goaly]
 
         iter += 1
      
         
-    return False
+    return False, angle_2_goal, [goalx, goaly]
 
 
 def main(args=None):

@@ -118,6 +118,12 @@ class ARM_SM(Node):
             10
         )
 
+        self.arm_feedback_update = self.create_publisher(
+            Bool,
+            '/state_machine/arm',
+            10
+        )
+
         self.timer = self.create_timer(0.1, self.state_machine_callback)
 
     
@@ -172,9 +178,9 @@ class ARM_SM(Node):
                 self.point_stack_x = 0.0
                 self.point_stack_y = 0.0
             elif self.state == 1: #calculate the object position with foward kinematic
-                if self.point_count >= 7:
+                if self.point_count >= 6:
                     armcam_obj_pos = Float32MultiArray()
-                    armcam_obj_pos.data = [1.0, self.point_stack_x / (self.point_count - 3.0), self.point_stack_y / (self.point_count - 3.0)]
+                    armcam_obj_pos.data = [1.0, self.point_stack_x / (self.point_count - 2.0), self.point_stack_y / (self.point_count - 2.0)]
                     print('Obj Position in Camera: ', armcam_obj_pos.data)
                     self.fk_pub.publish(armcam_obj_pos)
                     self.state = 2
@@ -223,6 +229,9 @@ class ARM_SM(Node):
         if self.command != msg.data:
             self.command = msg.data
             self.state = 0
+            arm_sm_update = Bool()
+            arm_sm_update.data = True
+            self.arm_feedback_update.publish(arm_sm_update)
 
 
 
@@ -264,17 +273,28 @@ class ARM_SM(Node):
                         self.point_stack_x += msg.x
                         self.point_stack_y += msg.y
             
-        elif self.point_count < 8.0 and self.state == 1:
-            if self.point_count == 3.0:
+        elif self.point_count < 6.0 and self.state == 1:
+            if self.point_count == 2.0:
                 self.point_stack_x = 0
                 self.point_stack_y = 0
             if self.previous_point_x != msg.x:
-                self.previous_point_x = msg.x
-                self.previous_point_y = msg.y
-                self.point_count += 1.0
-                self.point_stack_x += msg.x
-                self.point_stack_y += msg.y
-                print('Camera data count: ', self.point_count)
+                if self.point_count >= 3:
+                    diff = 0.1
+                    if abs(msg.x - self.previous_point_x) < 0.03:
+                        if abs(msg.y - self.previous_point_y) < 0.03:
+                            self.previous_point_x = msg.x
+                            self.previous_point_y = msg.y
+                            self.point_count += 1.0
+                            self.point_stack_x += msg.x
+                            self.point_stack_y += msg.y
+                            print('Camera data count: ', self.point_count)
+                else:
+                    self.previous_point_x = msg.x
+                    self.previous_point_y = msg.y
+                    self.point_count += 1.0
+                    self.point_stack_x += msg.x
+                    self.point_stack_y += msg.y
+                    print('Camera data count: ', self.point_count)
 
 
 

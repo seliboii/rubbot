@@ -1,5 +1,7 @@
 float64 x
 float64 y
+float64 angular_z
+string type
 float64 max_period
 ---
 bool reached_goal

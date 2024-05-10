@@ -10,7 +10,8 @@ from tf2_ros import TransformBroadcaster
 import tf2_geometry_msgs
 
 from aruco_msgs.msg import MarkerArray
-from geometry_msgs.msg import TransformStamped
+from geometry_msgs.msg import TransformStamped, PoseStamped
+from robp_interfaces.msg import Information
 
 
 class DisplayMarkers(Node):
@@ -31,7 +32,7 @@ class DisplayMarkers(Node):
 
         # Subscribe to aruco marker topic and call callback function on each recieved message
         self.aruco = self.create_subscription(MarkerArray,'/marker_publisher/markers',self.aruco_callback,10)
-
+        self.send_aruco_pose = self.create_publisher(Information, '/marker_publisher/pose',1)
         
 
 
@@ -39,10 +40,10 @@ class DisplayMarkers(Node):
             arucoFrame = msg.header.frame_id
             try:
                 t = self.tf_buffer.lookup_transform('map',arucoFrame,msg.markers[0].header.stamp) #add timeout, around 0.1 sec. Good for the actual project 
-                self.get_logger().info("kuken")
+                
 
             except:
-                self.get_logger().info("kuken")
+                
                 return
             map_pose = tf2_geometry_msgs.do_transform_pose(msg.markers[0].pose.pose, t)
             t.transform.translation.x = map_pose.position.x
@@ -57,6 +58,12 @@ class DisplayMarkers(Node):
             t.header.stamp = msg.markers[0].header.stamp
             t.child_frame_id = '/aruco/detected'+str(id)
             self._tf_broadcaster.sendTransform(t)
+            msgInfo = Information()
+            msgInfo.pose.pose = map_pose
+            msgInfo.pose.header = msg.header
+    
+            msgInfo.label = str(id)
+            self.send_aruco_pose.publish(msgInfo)
             
          
 

@@ -17,6 +17,7 @@ import torch
 import shutil
 from map_msgs.msg import OccupancyGridUpdate
 from sensor_msgs.msg import PointField
+from robp_interfaces.msg import Information
 
 from .detector4 import Detector
 from .detector5 import Detector_
@@ -34,17 +35,16 @@ class Ros2Detector(Node):
         self.publisher_gripcam = self.create_publisher(Image, 'dl_gripcam', 10)
         self.publisher_gripper_angle = self.create_publisher(Float64,'gripper_angle',10)
         self.publisher_gripper_position = self.create_publisher(Point,'gripper_position',10)
-        self.publisher_pose = self.create_publisher(PoseStamped, '/object_og', 10)  
+        self.publisher_pose = self.create_publisher(Information, '/object_og', 10)  
 
-        self.subscription = self.create_subscription(Image,'/image_rect',self.image_callback,10)
-        self.subscription2 = self.create_subscription(Image,'/camera/color/image_raw',self.image_callback2,10)
+        self.subscription = self.create_subscription(Image,'/image_rect_throttle',self.image_callback, 1)
+        self.subscription2 = self.create_subscription(Image,'/camera/color/image_raw_throttle',self.image_callback2,1)
         self.subscription_depth_info = self.create_subscription(CameraInfo,'/camera/depth/camera_info', self.depth_info_callback, 10)
         self.subscription_depth = self.create_subscription(Image, '/camera/aligned_depth_to_color/image_raw', self.depth_callback, 10)
         self.subscription_gripper_info = self.create_subscription(Image, '/camera1/camera_info', self.gripper_info_callback, 10)
 
         self.publisher_pointcloud = self.create_publisher(PointCloud2, 'pointcloud', 10)
         self.publisher_occupancy_grid_update = self.create_publisher(OccupancyGridUpdate, 'occupancy_grid_updates', 10)
-
         
         self.gripcam_resolution = (640, 480)  # Resolution of image_rect topic
         self.realsense_resolution = (1280, 720)  # Resolution of camera/color/image_raw topic
@@ -78,7 +78,6 @@ class Ros2Detector(Node):
     def load_model(self):
         script_dir = os.path.dirname(os.path.realpath(__file__))
         model_path = os.path.join(script_dir, "modelV3.pt")
-        #model_path = "modelV3.pt"
         state_dict = torch.load(model_path, map_location=torch.device('cpu'))
         self.detector.load_state_dict(state_dict)
 
@@ -104,25 +103,6 @@ class Ros2Detector(Node):
         y_int = int(round(y))
         depth = self.depth_image[y_int, x_int]
         return depth
-    
-    # def get_pointcloud_at_point(self, x, y):
-    #     if self.depth_image is None or self.depth_info is None:
-    #         return None
-    #     fx = self.depth_info.k[0]  # Focal length in x direction
-    #     fy = self.depth_info.k[4]  # Focal length in y direction
-    #     cx = self.depth_info.k[2]  # Principal point in x direction
-    #     cy = self.depth_info.k[5]  # Principal point in y direction
-        
-    #     center_x = int(round(x))
-    #     center_y = int(round(y))
-        
-    #     depth = self.depth_image[center_y, center_x]
-    #     if depth == 0:
-    #         return None
-    #     z = float(depth)
-    #     x = (center_x - cx) * depth / fx
-    #     y = (center_y - cy) * depth / fy
-    #     return x, y, z  
 
     def get_pointcloud_at_point(self, x, y):
         if self.depth_image is None or self.depth_info is None:
@@ -183,21 +163,6 @@ class Ros2Detector(Node):
                     
             gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
             edges = cv2.Canny(gray_roi, 100, 150)  
-                    
-            #moments = cv2.moments(edges)
-            #mu20 = moments['mu20']
-            #mu11 = moments['mu11']
-            #mu02 = moments['mu02']
-            #theta = 0.5 * np.arctan2(2 * mu11, (mu20 - mu02 + np.sqrt(4 * mu11**2 + (mu20 - mu02)**2)))
-                    
-            #theta_degrees = np.degrees(theta)
-
-            #turning_angle = theta_degrees  
-
-            #if turning_angle > 10:
-            #    angle_msg = Float64()
-            #    angle_msg.data = 90 -(turning_angle)
-            #    self.publisher_gripper_angle.publish(angle_msg)
 
             img_center_x = cv_image.shape[1] // 2
             img_center_y = cv_image.shape[0] // 2
@@ -220,7 +185,7 @@ class Ros2Detector(Node):
 
             text_label = f"{highest_score_bb.get('label')}"
             cv2.putText(cv_image, text_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-            print(highest_score_bb.get('label'))
+            #print(highest_score_bb.get('label'))
 
             cv2.rectangle(cv_image, (x, y), (x2, y2), (0, 255, 0), 2)
                     
@@ -233,7 +198,7 @@ class Ros2Detector(Node):
 
     def image_callback2(self, msg):
         current_time = time.time()
-        elapsed_time = current_time - self.last_save_time
+        #elapsed_time = current_time - self.last_save_time
         
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         tensor_frame = torch.tensor(cv_image, dtype=torch.float32).permute(2, 0, 1) / 255.0
@@ -243,6 +208,7 @@ class Ros2Detector(Node):
         resized_bbs = self.resize_bounding_boxes(bbs[0], self.realsense_resolution, self.realsense_resolution)
 
         poses = []  
+        #labels = []
         bb_list = []  
 
         label_counts = {}
@@ -267,16 +233,16 @@ class Ros2Detector(Node):
 
             # Check if the new pose is within 3 cm of existing poses for the same label
             label = bb.get("label")
-            if label in self.detected_poses:
-                existing_poses = self.detected_poses[label]
-                new_pose_position = (final_x, final_y, depth)
-                pose_exists = any(
-                    self.calculate_distance(new_pose_position, 
-                                    (pose.pose.position.x, pose.pose.position.y, pose.pose.position.z)) < 0.5
-                    for pose in existing_poses
-                )
-                if pose_exists:
-                    continue  # Skip this pose
+            # if label in self.detected_poses:
+            #     existing_poses = self.detected_poses[label]
+            #     new_pose_position = (final_x, final_y, depth)
+            #     pose_exists = any(
+            #         self.calculate_distance(new_pose_position, 
+            #                         (pose.pose.position.x, pose.pose.position.y, pose.pose.position.z)) < 0.5
+            #         for pose in existing_poses
+            #     )
+            #     if pose_exists:
+            #         continue  # Skip this pose
 
             # Iterate through all points inside the bounding box
             for px in range(int(x), int(x + width)):
@@ -321,32 +287,26 @@ class Ros2Detector(Node):
             cv2.putText(cv_image, f"{labeled_label}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # Save image with bounding boxes
-            if elapsed_time >= 1:
-                image_id = msg.header.stamp.sec
-                self.save_image_with_bb(cv_image.copy(), resized_bbs, image_id, "Pictures")
-                self.last_save_time = current_time
+            # if elapsed_time >= 1:
+            #     image_id = msg.header.stamp.sec
+            #     self.save_image_with_bb(cv_image.copy(), resized_bbs, image_id, "Pictures")
+            #     self.last_save_time = current_time
             
-            # Store the detected pose
             if label not in self.detected_poses:
                 self.detected_poses[label] = []
             self.detected_poses[label].append(pose_msg)
             
-            poses.append(pose_msg)
+            msg = Information()
+            msg.pose = pose_msg
+            msg.label = label
+
+            poses.append(msg)
 
         msg_with_bounding_box = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
         self.publisher_realsense.publish(msg_with_bounding_box)
 
         for pose in poses:
             self.publisher_pose.publish(pose)
-
-        # Print the dictionary of detected poses
-        #print("Detected Poses:")
-        for label, poses_list in self.detected_poses.items():
-            #print(f"Label: {label}")
-            #print("Poses:")
-            for pose_msg in poses_list:
-                print(pose_msg)
-            print()  # Print an empty line for readability between different labels
 
 
 def main(args=None):

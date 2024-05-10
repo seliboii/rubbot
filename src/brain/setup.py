@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'behavior_tree = brain.behavior_tree:main'
+            'behavior_tree = brain.behavior_tree:main',
+            'sm_ms3 = brain.sm_ms3:main'
         ],
     },
 )

@@ -51,7 +51,7 @@ class ArmControl(Node):
         msg.data = True
         self.robstate_pub.publish(msg)
 
-    def notworking(self):
+    def notworking(self): #topic for SM
         msg = Bool()
         msg.data = False
         self.robstate_pub.publish(msg)
