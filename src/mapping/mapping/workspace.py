@@ -142,7 +142,7 @@ class Workspace(Node):
                 t = self.tf_buffer.lookup_transform(to_frame_rel,from_frame_rel,msg.header.stamp) #add timeout, around 0.1 sec. Good for the actual project 
                 map_pose = tf2_geometry_msgs.do_transform_pose_stamped(msg, t)
                 #map_pose = tf2_geometry_msgs.do_transform_pose(msg.pose.pose, t)
-                map_pose.pose.position
+                #map_pose.pose.position
                 self.ox = int((map_pose.pose.position.x+4)/self.res)
                 self.oy = int((map_pose.pose.position.y+2)/self.res)
                 self.obstacle_list.pop(0)
