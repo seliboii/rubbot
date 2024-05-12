@@ -29,7 +29,7 @@ class StateMachine(Node):
         cbg = ReentrantCallbackGroup()
 
         sm_period = 0.1
-        self.state = 'init'
+        self.state = 'wait'
         self.create_timer(sm_period, self.sm_cb)
         self.twist_pub = self.create_publisher(
             Twist,
@@ -138,7 +138,7 @@ class StateMachine(Node):
 
         #ros2 topic pub /marker_publisher/pose robp_interfaces/msg/Information "{pose: {header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'map'}, pose: {position: {x: 1.0, y: 0.5, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.707, w: 0.707}}}, label: 'box'}"
 
-
+        #ros2 topic pub /marker_publisher/feedbackpose geometry_msgs/msg/Pose "{position: {x: 1.0, y: 1.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 0.0}}"
 
         # publish arm actions
         self.arm_pub = self.create_publisher(
@@ -152,6 +152,7 @@ class StateMachine(Node):
         match self.state:
             case 'wait':
                 if self.cnt > 10:
+                    self.get_logger().info('From wait to approach')
                     self.state = 'approach'
                 self.cnt += 1
 
@@ -164,22 +165,29 @@ class StateMachine(Node):
 
                 # x_error = self.approach_pose.position.x - self.odom_x #self.feedback_obj_pose
                 # y_error = self.approach_pose.position.y - self.odom_y
-                
+                velocity_count = 50
                 if abs(self.feedback_obj_pose.position.x) > 0.1:
                     self.twist.linear.x = 0.0
-                    self.twist.angular.z = -10 * self.feedback_obj_pose.position.x
+                    self.twist.angular.z = -0.1 * self.feedback_obj_pose.position.x
                     print('x offset :', self.feedback_obj_pose.position.x)
+
                 
                 else:
-                    self.twist.angular.z = 0.0
-                    self.twist.linear.x = 0.0
                     self.cnt += 1
-
-                if self.cnt > 50:
                     self.twist.angular.z = 0.0
-                    self.twist.linear.x = 0.0
-                    self.state = 'out'
-                    self.first_iter = True
+                    if self.cnt < velocity_count:
+                        self.twist.linear.x = 0.2
+                    else:
+                        self.twist.angular.z = 0.0
+                        self.twist.linear.x = 0.0
+                        self.get_logger().info('From approach to pick')
+                        self.state = 'pick'
+
+                # if self.cnt > 50:
+                    # self.twist.angular.z = 0.0
+                    # self.twist.linear.x = 0.0
+                    # self.state = 'out'
+                    # self.first_iter = True
 
                 # phi = atan2(y_error, x_error)
                 # theta_error = phi - self.odom_theta
@@ -475,6 +483,7 @@ class StateMachine(Node):
         print("AURCO LIST SIZE: ", len(self.aruco_list))
 
     def detected_object_callback(self, msg: Information):
+        self.feedback_obj_pose = msg.pose.pose
         DISTANCE_THRESHOLD = 0.1 #meter
         new_label = msg.label
         new_pose = msg.pose
