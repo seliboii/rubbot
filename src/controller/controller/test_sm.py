@@ -22,6 +22,10 @@ import os
 import time
 from robp_interfaces.msg import Information
 from math import atan2
+from tf2_ros.buffer import Buffer
+from tf2_ros import TransformException
+from tf2_ros.transform_listener import TransformListener
+import tf2_geometry_msgs
 
 class StateMachine(Node):
     def __init__(self):
@@ -36,6 +40,8 @@ class StateMachine(Node):
             '/motor_controller/twist',
             1
         )
+
+        self.tf_buffer = Buffer()
         
         self.arm_feedback = self.create_subscription(
             Bool,
@@ -469,10 +475,11 @@ class StateMachine(Node):
             new_pose.pose.orientation.z,
             new_pose.pose.orientation.w
         ])
+        
         new_pose.pose.position.x = new_pose.pose.position.x + math.cos(e[2]) * DISTANCE_INFRONT 
         new_pose.pose.position.y = new_pose.pose.position.y + math.sin(e[2]) * DISTANCE_INFRONT
         
-        q = quaternion_from_euler(0,0,e[2]+math.pi)
+        q = quaternion_from_euler(0,0,e[1]+math.pi)
         new_pose.pose.orientation.x = q[0]
         new_pose.pose.orientation.y = q[1]
         new_pose.pose.orientation.z = q[2]
@@ -483,10 +490,18 @@ class StateMachine(Node):
         print("AURCO LIST SIZE: ", len(self.aruco_list))
 
     def detected_object_callback(self, msg: Information):
-        self.feedback_obj_pose = msg.pose.pose
+        #self.feedback_obj_pose = msg.pose.pose
+        
+        try:
+            t = self.tf_buffer.lookup_transform('map','camera_link',msg.pose.header.stamp)
+            map_pose = tf2_geometry_msgs.do_transform_pose_stamped(msg.pose, t)
+
+        except:
+            return
+
         DISTANCE_THRESHOLD = 0.1 #meter
         new_label = msg.label
-        new_pose = msg.pose
+        new_pose = map_pose
 
         #object_list [label, PoseStamped]
 
