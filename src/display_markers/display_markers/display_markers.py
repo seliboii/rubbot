@@ -10,7 +10,7 @@ from tf2_ros import TransformBroadcaster
 import tf2_geometry_msgs
 
 from aruco_msgs.msg import MarkerArray
-from geometry_msgs.msg import TransformStamped, PoseStamped
+from geometry_msgs.msg import TransformStamped, PoseStamped, Pose
 from robp_interfaces.msg import Information
 
 
@@ -33,6 +33,7 @@ class DisplayMarkers(Node):
         # Subscribe to aruco marker topic and call callback function on each recieved message
         self.aruco = self.create_subscription(MarkerArray,'/marker_publisher/markers',self.aruco_callback,10)
         self.send_aruco_pose = self.create_publisher(Information, '/marker_publisher/pose',1)
+        self.aruco_pose_pub_robotframe = self.create_publisher(Pose, '/marker_publisher/feedbackpose', 1)
         
 
 
@@ -63,6 +64,7 @@ class DisplayMarkers(Node):
             msgInfo.pose.header = msg.header
     
             msgInfo.label = str(id)
+            self.aruco_pose_pub_robotframe.publish(msg.markers[0].pose.pose)
             self.send_aruco_pose.publish(msgInfo)
             
          

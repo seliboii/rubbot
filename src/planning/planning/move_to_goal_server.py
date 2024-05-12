@@ -112,9 +112,10 @@ class MoveToGoalServerNode(Node):
         feedback = MoveToGoal.Feedback()
         
         
-        path, object_angle, temp = RRT(self,self.height,self.width,self.res,self.data,self.start_x,self.start_y,goal_x,goal_y,object_type)
-        self.get_logger().info(str(temp[0]))
-        self.get_logger().info(str(temp[1]))
+        path, object_angle, temp, iter = RRT(self,self.height,self.width,self.res,self.data,self.start_x,self.start_y,goal_x,goal_y,object_type)
+        self.get_logger().info(str(iter))        
+        # self.get_logger().info(str(temp[0]))
+        # self.get_logger().info(str(temp[1]))
         if object_type == 'object':
             self.goal_angle = object_angle
         if path == False:
@@ -218,16 +219,24 @@ def controller(gx,gy,x0,y0,odom_x,odom_y,odom_theta,done):
         L = 0.31
         R = 0.0492
 
-        wGain = 1/(sample_period*R*80)  #40
+        wGain = 1/(sample_period*R*60)  #40
         vGain = L/(p*sample_period*R*20) #10
 
         vel = Twist()
-        if vGain*d_g > 1.0:
-            vel.linear.x = 1.0
-        elif vGain*d_g < -1.0:
-            vel.linear.x = -1.0
-        else:
-            vel.linear.x = vGain*d_g
+        vel.angular.z = wGain*d_p
+        vel.linear.x = vGain*d_g
+
+       
+        if vGain*d_g > 0.8:
+            vel.linear.x = 0.8
+        elif vGain*d_g < -0.8:
+            vel.linear.x = -0.8
+        
+        if vel.angular.z > 1.0:
+            vel.angular.z = 1.0
+        elif vel.angular.z < -1.0:
+            vel.angular.z = -1.0
+            
         
         # if abs(theta_g-theta) > math.pi*2/3:
         #     vel.linear.x = 0.0
@@ -239,7 +248,7 @@ def controller(gx,gy,x0,y0,odom_x,odom_y,odom_theta,done):
             vel.angular.z = vel.angular.z #*1.5
         
         
-        vel.angular.z = wGain*d_p
+        
         #self._vel_pub.publish(vel)
         return vel
     else:
@@ -356,35 +365,50 @@ def backTracker(node,path):
     return path
   
 def shortCut(node,goal_node,data):
+    #print("INNN SHORTCUT YOOOOOOO")
     start = [goal_node.x,goal_node.y]
     end = [node.x,node.y]
     traversed = raytrace(start,end)
     for point in traversed:
-        if data[point[1]][point[0]] != 0: ############HEHEHHEHEHEHHEHEHEHEHEH !=0
+        if data[point[1]][point[0]] != 0: 
             return False
     return True
 
 def bushWacker(node,data):
     if node.parent == None:
+        #print("HERE 1")
         return
+    
     start_node = node
-    while shortCut(node.parent,start_node,data):
+    while shortCut(node.parent,start_node,data): #HERE IS THE ISSUE
+        #print("IN LOOP")
         node = node.parent
         if node.parent == None:
+            #print("HERE 2")
             break
     start_node.parent = node
+    #print("WACKER")  
     bushWacker(node,data)
     return
 
 def LCHF(node,data):
-    daddy = node.parent
-    try:
+    if node.parent != None and node.parent.parent != None:
+        daddy = node.parent
         granddaddy = daddy.parent
-    except:
+    else:
         return
-    traversed = raytrace([daddy.x,daddy.y],[node.x,node.y])
+    # if granddaddy == None:
+    #     return
+
+    # try:
+    #     daddy = node.parent
+    #     granddaddy = daddy.parent
+    # except:
+    #     return
+    traversed = raytrace([node.x,node.y], [daddy.x,daddy.y]) #SWITCHED PLACES
     for point in traversed:
         tempNode = NodePoint(point[0],point[1])
+        #print("LCHF FOR LOOP")
         if shortCut(tempNode,granddaddy,data):
             node.parent = tempNode
             tempNode.parent = granddaddy
@@ -403,6 +427,8 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly,object_type):
     goalPath = []
     nodes = []
 
+    
+
     if object_type == 'object':
         angle_2_goal = math.atan2(goaly-starty,goalx-startx)
         dist_2_goal = math.dist([starty, startx],[goaly, goalx])
@@ -415,29 +441,33 @@ def RRT(self,h,w,res,data,startx,starty,goalx,goaly,object_type):
         goal_node.parent = start_node
         goal_path = backTracker(goal_node,goalPath)
         goal_path.reverse()
-        return goal_path, angle_2_goal, [goalx, goaly]
-
+        return goal_path, angle_2_goal, [goalx, goaly], iter
+    #print("IN RRT")
 
     nodes.append(start_node)
     while iter < maxIter:
+        print("ITER: ", iter)
         new_node = randomNode(h,w,data,nodes,max_edge_dist)
         if new_node != False:
             nodes.append(new_node)
+            
            
             if shortCut(new_node,goal_node,data) == True:
-                
+                #print("ITER: ", iter)
                 goal_node.parent = new_node
                 bushWacker(new_node,data)
+                #print("I LIKE AXEL")
                 LCHF(goal_node,data)
+                #print("I LOVE TOBY")
                 goalPath = backTracker(goal_node,goalPath)
-                
+                #print("I AM GAY BOY")
                 goalPath.reverse()
-                return goalPath, angle_2_goal, [goalx, goaly]
+                return goalPath, angle_2_goal, [goalx, goaly], iter
 
         iter += 1
      
         
-    return False, angle_2_goal, [goalx, goaly]
+    return False, angle_2_goal, [goalx, goaly], iter
 
 
 def main(args=None):

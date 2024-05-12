@@ -2,7 +2,7 @@
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import PoseStamped, Twist, PointStamped
+from geometry_msgs.msg import PoseStamped, Twist, PointStamped, Pose
 import rclpy.time
 import rclpy.waitable
 from rubbot_interfaces.msg import GoalReached
@@ -21,6 +21,7 @@ import playsound
 import os
 import time
 from robp_interfaces.msg import Information
+from math import atan2
 
 class StateMachine(Node):
     def __init__(self):
@@ -88,6 +89,15 @@ class StateMachine(Node):
             callback_group=cbg
             )
         
+        self.create_subscription(
+            Pose, '/marker_publisher/feedbackpose', self.fb_cb, 1
+        )
+
+        self.feedback_obj_pose = Pose()
+        self.approach_pose = Pose()
+
+        self.acc_err = 0
+        
         self.temp_pub = self.create_publisher(
             PoseStamped,
             '/temp/display_pose',
@@ -120,7 +130,8 @@ class StateMachine(Node):
         self.odom_y = 0
         self.odom_theta = 0
         self.test_stamp = 0
-        self.explored_layer = -4 
+        self.explored_layery = -2 
+        self.explored_layerx = -4
 
         self.object_list = []
         self.aruco_list = []
@@ -139,14 +150,61 @@ class StateMachine(Node):
 
     def sm_cb(self):
         match self.state:
+            case 'wait':
+                if self.cnt > 10:
+                    self.state = 'approach'
+                self.cnt += 1
+
+            # approach rotates until it is directly facing (withing margin) an object (currently it only handles aruco markers), 
+            # then open loop drives forward for a fixed time, fixed velocity 
+            case 'approach':
+                if self.first_iter:
+                    # self.approach_pose = self.feedback_obj_pose
+                    self.first_iter = False
+
+                # x_error = self.approach_pose.position.x - self.odom_x #self.feedback_obj_pose
+                # y_error = self.approach_pose.position.y - self.odom_y
+                
+                if abs(self.feedback_obj_pose.position.x) > 0.1:
+                    self.twist.linear.x = 0.0
+                    self.twist.angular.z = -10 * self.feedback_obj_pose.position.x
+                    print('x offset :', self.feedback_obj_pose.position.x)
+                
+                else:
+                    self.twist.angular.z = 0.0
+                    self.twist.linear.x = 0.0
+                    self.cnt += 1
+
+                if self.cnt > 50:
+                    self.twist.angular.z = 0.0
+                    self.twist.linear.x = 0.0
+                    self.state = 'out'
+                    self.first_iter = True
+
+                # phi = atan2(y_error, x_error)
+                # theta_error = phi - self.odom_theta
+
+                # dist = y_error**2 + x_error**2
+
+                # self.acc_err += theta_error
+                # self.twist.angular.z = 5 * theta_error #+ 1 * self.acc_err
+                # self.twist.linear.x = 1 * dist
+
+                # print('theta err: ', theta_error, ' distance: ', dist)
+
+                self.twist_pub.publish(self.twist)
+
             case 'init':
                 self.get_logger().info('In init state')
                 self.state = 'rotate'
                 self.speak_bitch(" jejejej   we are now rotating")
 
             case 'rotate':
-                max_cnt = 10
-                self.twist.angular.z = 0.8
+                # print(self.data.shape)
+                # print(self.data[800][:])
+
+                max_cnt = 40
+                self.twist.angular.z = 1.4
                 if abs(self.cnt) < max_cnt:
                     self.twist_pub.publish(self.twist)
                     self.cnt += 1
@@ -155,7 +213,7 @@ class StateMachine(Node):
                     self.twist.angular.z = 0.0
                     self.twist_pub.publish(self.twist)
                     print("SLEEPING")
-                    time.sleep(2)
+                    #time.sleep(2)
                     self.cnt += 1
                     return
                 elif max_cnt <= self.cnt < 2*max_cnt:
@@ -177,8 +235,9 @@ class StateMachine(Node):
                 self.cnt = -1
                 self.twist.angular.z = 0.0
                 self.twist_pub.publish(self.twist)
-                self.state = 'goto_object'
-                self.speak_bitch("yoooooooooo we are now exploring viva españa viva el rey viva el orden y la ley")
+                self.state = 'explore'
+                self.get_logger().info('Going to explore')
+                self.speak_bitch("yoooooooooo we are now exploring")
 
             case 'explore':
                 max_cnt = 20
@@ -186,16 +245,19 @@ class StateMachine(Node):
                 # print("GOAL REACH: ", self.goal_reached)
                 if self.cnt < max_cnt:
                     if self.goal_reached:
-                        print("LAYERS: ", self.explored_layer)
-                        x, y = edging(self.data,self.res, self.explored_layer)
-                        self.explored_layer = y
+                        #print("LAYERS: ", self.explored_layery)
+                        x, y = edging(self.data,self.res, self.explored_layery, self.explored_layerx)
+                        self.explored_layery = y
+                        self.explored_layerx = x
+                        
+
                         test = PointStamped()
                         test.point.x = x
                         test.point.y = y
                         test.header.frame_id = 'map'
                         test.header.stamp = self.test_stamp
                         self.explore_goal.publish(test)
-                        print("X: ",x," Y: ", y)
+                        #print("X: ",x," Y: ", y)
                         self.goalpose.pose.pose.position.x = x
                         self.goalpose.pose.pose.position.y = y
                         self.goalpose.label = 'explore'
@@ -204,7 +266,7 @@ class StateMachine(Node):
                         self.cnt += 1
                 else:
                     print("FINISHED EXPLORED")
-                    self.speak_bitch("We have finished exploring. Viva España, Viva el rey. Viva el orden Y la ley")
+                    self.speak_bitch("We have finished exploring. viva españa, viva el rey. viva el orden y la ley")
                     self.state = 'goto_object'
                     
             case 'goto_object':
@@ -369,7 +431,7 @@ class StateMachine(Node):
 
     def speak_bitch(self, text):
         time.sleep(2)
-        tts = gTTS(text = text, lang = 'es')
+        tts = gTTS(text = text, lang = 'es', tld='com.mx')
         filename = "textfile.mp3"
         tts.save(filename)
         playsound.playsound(filename)
@@ -431,22 +493,34 @@ class StateMachine(Node):
         self.object_list.append([new_label, new_pose])
         print("I APPENDED A OBJECT")
         
+    def fb_cb(self, pose_msg: Pose):
+        self.feedback_obj_pose = pose_msg
 
 
+def edging(data, res, layery, layerx):
+    DIST_THRESHOLD = 50
 
-def edging(data, res, layer):
-    min_y = int((layer+2)/res)
-    print("MIN_y", min_y)
-    h, w = data.shape
-    for x in range(h):
-        for y in range(min_y, w):
-            if data[x][y] != 0:
+    min_x = int((layerx+4)/res)
+    min_y = int((layery+2)/res)
+    #print("MIN_x", min_x, "MIN_y", min_y)
+    h, w = data.shape # 1000x700
+    # print(h)
+    for y in range(min_y, h):
+        for x in range(w):
+            if data[y][x] != 0:
                 pass
             else:
-                if data[x-1][y] == -1 or data[x+1][y] == -1 or data[x][y+1] == -1 or data[x][y-1] == -1:
-                    scaled_x = res*y-4
-                    scaled_y = res*x-2
-                    return float(scaled_x), float(scaled_y) 
+                dist = math.dist([x,y],[min_x, min_y])
+                #print("DIST: ", dist)
+                if dist < DIST_THRESHOLD:
+                    # print("YEEETED DIST")
+                    # print("X: ", x, "Y", y)
+                    pass
+                else:
+                    if data[y-1][x] == -1 or data[y+1][x] == -1 or data[y][x+1] == -1 or data[y][x-1] == -1:
+                        scaled_y = res*y-2
+                        scaled_x = res*x-4
+                        return float(scaled_x), float(scaled_y) 
     print("I FUCKED UP")
     
     

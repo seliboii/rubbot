@@ -18,6 +18,7 @@ import shutil
 from map_msgs.msg import OccupancyGridUpdate
 from sensor_msgs.msg import PointField
 from robp_interfaces.msg import Information
+from visualization_msgs.msg import Marker
 
 from .detector4 import Detector
 from .detector5 import Detector_
@@ -59,6 +60,10 @@ class Ros2Detector(Node):
         self.last_save_time = time.time()
 
         self.detected_poses = {}
+
+        self.publisher_markers = self.create_publisher(Marker, 'object_markers', 10)
+
+        self.marker_dict = {}
 
     def depth_info_callback(self, msg):
         self.depth_info = msg
@@ -208,7 +213,6 @@ class Ros2Detector(Node):
         resized_bbs = self.resize_bounding_boxes(bbs[0], self.realsense_resolution, self.realsense_resolution)
 
         poses = []  
-        #labels = []
         bb_list = []  
 
         label_counts = {}
@@ -233,16 +237,6 @@ class Ros2Detector(Node):
 
             # Check if the new pose is within 3 cm of existing poses for the same label
             label = bb.get("label")
-            # if label in self.detected_poses:
-            #     existing_poses = self.detected_poses[label]
-            #     new_pose_position = (final_x, final_y, depth)
-            #     pose_exists = any(
-            #         self.calculate_distance(new_pose_position, 
-            #                         (pose.pose.position.x, pose.pose.position.y, pose.pose.position.z)) < 0.5
-            #         for pose in existing_poses
-            #     )
-            #     if pose_exists:
-            #         continue  # Skip this pose
 
             # Iterate through all points inside the bounding box
             for px in range(int(x), int(x + width)):
@@ -251,7 +245,7 @@ class Ros2Detector(Node):
                     if pointcloud_point is not None:
                         depth_values.append(pointcloud_point)
 
-            # Store the detected pose only if it's not too close to existing poses
+            # Store the detected pose
             pose_msg = PoseStamped()
             pose_msg.header.stamp = self.get_clock().now().to_msg() 
             pose_msg.header.frame_id = 'camera_link'
@@ -286,12 +280,27 @@ class Ros2Detector(Node):
             cv2.rectangle(cv_image, (x, y), (x + width, y + height), (0, 255, 0), 2)
             cv2.putText(cv_image, f"{labeled_label}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-            # Save image with bounding boxes
-            # if elapsed_time >= 1:
-            #     image_id = msg.header.stamp.sec
-            #     self.save_image_with_bb(cv_image.copy(), resized_bbs, image_id, "Pictures")
-            #     self.last_save_time = current_time
-            
+            # Update the marker dictionary for each label
+            if label not in self.marker_dict:
+                self.marker_dict[label] = Marker()
+                self.marker_dict[label].header.frame_id = 'camera_link'
+                self.marker_dict[label].type = Marker.TEXT_VIEW_FACING
+                self.marker_dict[label].scale.x = 0.1
+                self.marker_dict[label].scale.y = 0.1
+                self.marker_dict[label].scale.z = 0.1
+                self.marker_dict[label].color.a = 1.0
+                self.marker_dict[label].color.r = 0.0
+                self.marker_dict[label].color.g = 1.0
+                self.marker_dict[label].color.b = 0.0
+
+            self.marker_dict[label].id = label_counts[label]
+            self.marker_dict[label].header.stamp = self.get_clock().now().to_msg()
+            self.marker_dict[label].text = labeled_label
+            self.marker_dict[label].pose.position.x = depth / 1000
+            self.marker_dict[label].pose.position.y = -final_x / 1000
+            self.marker_dict[label].pose.position.z = -final_y / 1000
+
+            # Store pose information
             if label not in self.detected_poses:
                 self.detected_poses[label] = []
             self.detected_poses[label].append(pose_msg)
@@ -302,9 +311,15 @@ class Ros2Detector(Node):
 
             poses.append(msg)
 
+        # Publish markers for each label
+        for label in self.marker_dict:
+            self.publisher_markers.publish(self.marker_dict[label])
+
+        # Publish image with bounding box
         msg_with_bounding_box = self.bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
         self.publisher_realsense.publish(msg_with_bounding_box)
 
+        # Publish detected poses
         for pose in poses:
             self.publisher_pose.publish(pose)
 
